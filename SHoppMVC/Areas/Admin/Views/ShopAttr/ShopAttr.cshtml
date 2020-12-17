@@ -1,0 +1,100 @@
+﻿@model PagedList.IPagedList<SHoppMVC.Models.attribute>
+@using PagedList.Mvc;
+@{
+    Layout = null;
+    ViewBag.Title = "商品属性管理";
+    ViewBag.nav = "商品属性管理";
+}
+<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+@*页面样式 *@
+<link rel="stylesheet" href="https://www.jq22.com/jquery/font-awesome.4.7.0.css">
+<link href="~/Areas/Admin/content/css/button/component.css" rel="stylesheet" />
+<link href="~/Areas/Admin/content/css/button/hoverStyle.css" rel="stylesheet" />
+<div class="progress-button">
+    <button type="submit" id="search">@Html.ActionLink("导出", "excelout")</button>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            属性名称
+        </th>
+        <th>
+            属性值
+        </th>
+        <th>
+            属性类型
+        </th>
+        <th>
+            是否检索
+        </th>
+        <th>
+            排序
+        </th>
+        <th>
+            是否关联
+        </th>
+        <th>操作</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.attrName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.attrValues)
+            </td>
+            <td>
+                @if (item.attrType == 0)
+                {
+                    <p>不用多选</p>
+                }
+                else
+                {
+                    <p>可以多选</p>
+                }
+            </td>
+            <td>
+                @if (item.attrIndex == 0)
+                {
+                    <p>不检索</p>
+                }
+                @if (item.attrIndex == 1)
+                {
+                    <p>关键字检索</p>
+                }
+                @if (item.attrIndex == 2)
+                {
+                    <p>范围检索</p>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sortOrder)
+            </td>
+            <td>
+                @if (item.is_linked == 0)
+                {
+                    <p>不关联</p>
+                }
+                else
+                {
+                    <p>关联</p>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("  ", "ShopAttrAdd", null, new   {@class = "fa fa-plus", @style = "font-size:18px;"  })
+                @Html.ActionLink("  ", "ShopAttrUpdate", null, new { id = item.attrId }, new { @class = "fa fa-pencil-square-o", @style = "font-size:18px;" })
+                @Html.ActionLink("  ", "ShopAttrDelete", null, new { id = item.attrId }, new { onclick = "return confirm('确定要删除吗？')", @class = "fa fa-times", @style = "font-size:18px;" })
+                @Html.ActionLink("  ", "ShopAttrSee", null, new { id = item.attrId }, new { @class = "fa fa-file-text-o", @style = "font-size:18px;" })
+            </td>
+        </tr>
+    }
+
+</table>
+ 共 @Model.PageCount 页，当前 @Model.PageNumber 页 @Html.PagedListPager(Model, pagenum => Url.Action("ShopAttr", new { pagenum, @class = "button" }))
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Areas/Admin/content/js/front.js"></script>

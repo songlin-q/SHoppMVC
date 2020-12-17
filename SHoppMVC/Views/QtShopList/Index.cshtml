@@ -1,0 +1,150 @@
+﻿
+@model  PagedList.IPagedList<SHoppMVC.Models.QtGoodsList>
+@using PagedList.Mvc
+@{
+
+    ViewBag.Title = "商品列表";
+    ViewBag.count = ViewBag.cartnum;
+    ViewBag.Loginname = ViewBag.login;
+}
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+            
+                    <div class="section_title">
+                        <p>好利来购物网站</p>
+                        <h2>商品列表</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="shop_area shop_reverse mt-70 mb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-12">
+
+                <aside class="sidebar_widget">
+                    <div class="widget_inner">
+                        <div class="widget_list widget_categories">
+                                <table class="table">
+                                    <tr>
+                                        <td>商品筛选</td>
+                                    </tr>
+                                    @for (int i = 0; i < ViewBag.frist.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a class="aaa">@ViewBag.frist[i].typeNarme</a>
+                                                <table style="display:none"class="hidd" >
+                                                    @for (int j = 0; j < ViewBag.two.Count; j++)
+                                                    {
+                                                        if (ViewBag.frist[i].ID == ViewBag.two[j].goodType)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    <a href="Index?ID=@ViewBag.two[j].ID" />@ViewBag.two[j].goodsName
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </table>
+                            </div>
+                        <div class="widget_list banner_widget">
+                            <div class="banner_thumb">
+                                <a href="#"><img src="~/assets/img/bg/banner17.jpg" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+            </div>
+            <div class="col-lg-9 col-md-12">
+
+                <div class="shop_toolbar_wrapper">
+                    <div class="shop_toolbar_btn">
+                        <button data-role="grid_list" type="button" class="active btn-list" data-toggle="tooltip" title="List"></button>
+                    </div>
+                    <div class="niceselect_option">
+                        <form>
+                            <div>
+
+
+                            </div>
+                        </form>
+                    </div>
+                    <div class="page_amount">
+                       
+                    </div>
+                </div>
+
+
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="row shop_wrapper grid_list">
+                            <div class="col-12 ">
+                                <div class="single_product">
+                                    <div class="product_thumb">
+                                        <a class="primary_img" href="product-details.html"><img src="@item.imgUrl" alt=""></a>
+                                        <div class="label_product">
+                                            <span class="label_sale">出售</span>
+                                        </div>
+                                    </div>
+                                    <div class="product_content list_content">
+                                        <h4 class="product_name"><a href="product-details.html">@item.goodsName</a></h4>
+                                        <p><a href="#">@item.TypeName</a></p>
+                                        <div class="price_box">
+                                            <span class="current_price">$@item.promoteprice</span>
+                                            <span class="old_price">$@item.marketprice</span>
+                                        </div>
+                                        <div class="product_desc">
+                                            <p>@item.imgDesc</p>
+                                        </div>
+                                        <div class="action_links list_action_right">
+                                            <ul>
+                                            
+                                                <li class="add_to_cart"><a href="../Cart/Index?ID=@item.ID" title="添加到购物车">添加到购物车</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+   
+             
+                <div class="shop_toolbar t_bottom">
+
+                    <div class="pagination">
+                        当前 @Model.PageNumber 页，共 @Model.PageCount 页
+                        @Html.PagedListPager(Model, pageNum => Url.Action("Index", new { pageNum }))
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script  src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    //window.onbeforeunload = function () {
+    //    $.post("/QtShopList/change", { username: null });
+    //};
+      $(function(){
+          $(".aaa").click(function () {   
+              $(this).next().slideToggle(0.5);
+        });
+         
+      });
+</script>

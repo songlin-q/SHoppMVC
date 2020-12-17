@@ -1,0 +1,96 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "AdminLogin";
+}
+
+<meta name="viewport" content="width=device-width" />
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.css" type="text/css" media="all" />
+<link href="~/Areas/Admin/content/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+    <div class="main-bg" id="mian">
+  
+        <h1>好利来后台管理系统</h1>
+
+        <div class="sub-main-w3">
+            <div class="image-style">
+
+            </div>
+            <div class="vertical-tab">
+                <div id="section1" class="section-w3ls">
+                    <input type="radio" name="sections" id="option1" checked>
+                    <label for="option1" class="icon-left-w3pvt"><span class="fa fa-user-circle" aria-hidden="true"></span>登录</label>
+                    <article>
+                        <form action="~/Admin/AdminLogin/AdminLogins" method="post">
+                            <h3 class="legend">账号登录</h3>
+                            <div class="input">
+                                <span class="fa fa-envelope-o" aria-hidden="true"></span>
+                                @Html.TextBox("userName", null, new { @placeholder = "请输入用户名", @class = "text-danger" })
+                            </div>
+                            <div class="input">
+                                <span class="fa fa-key" aria-hidden="true"></span>
+                                @Html.Password("userPwd", null, new { @placeholder = "请输入密码", @class = "text-danger" })
+                            </div>
+
+                            <input type="submit" id="denglu" value="登录" name="action1"  class="btn submit" />
+                            <a href="#" class="bottom-text-w3ls">忘记密码?</a>
+                        </form>
+                    </article>
+                </div>
+                <div id="section2" class="section-w3ls">
+                    <input type="radio" name="sections" id="option2">
+                    <label for="option2" class="icon-left-w3pvt"><span class="fa fa-pencil-square" aria-hidden="true"></span>注册</label>
+                    <article>
+                        <form action="~/Admin/AdminLogin/AdminLogins" method="post">
+                            <h3 class="legend">注册帐户</h3>
+                            <div class="input">
+                                <span class="fa fa-user-o" aria-hidden="true"></span>
+                                @Html.TextBox("newName", null, new { @placeholder = "请输入用户名", @class = "text-danger" })
+                            </div>
+                            <div class="input">
+                                <span class="fa fa-key" aria-hidden="true"></span>
+                                @Html.TextBox("newPwd", null, new { @placeholder = "请输入密码", @class = "text-danger" })
+                            </div>
+                            <div class="input">
+                                <span class="fa fa-phone" aria-hidden="true"></span>
+                                @Html.TextBox("userTel", null, new { @placeholder = "电话", @class = "text-danger" })
+                            </div>
+                            <input type="submit" id="zhuce" value="注册" name="action1" class="btn submit" />
+                        </form>
+                    </article>
+                </div>
+                <div id="section3" class="section-w3ls">
+                    <input type="radio" name="sections" id="option3">
+                    <label for="option3" class="icon-left-w3pvt"><span class="fa fa-lock" aria-hidden="true"></span>忘记密码?</label>
+                    <article>
+                        <form action="#" method="post">
+                            <h3 class="legend last">重置密码</h3>
+                            <p class="para-style">请在下面输入您的电子邮件地址，我们将给您发送一封带有说明的电子邮件。</p>
+                            <p class="para-style-2"><strong>需要帮助?</strong>了解更多关于如何 <a href="#">#</a></p>
+                            <div class="input">
+                                <span class="fa fa-envelope-o" aria-hidden="true"></span>
+                                <input type="email" v-model="forgetdata.email" placeholder="邮箱" name="email" required />
+                            </div>
+                            <button type="submit" class="btn submit last-btn">提交</button>
+                        </form>
+                    </article>
+                </div>
+            </div>
+
+
+            <div class="clear"></div>
+        </div>
+
+    </div>
+
+
+
+    <script src="https://www.jq22.com/jquery/vue.min.js"></script>
+
+    <script>
+
+    </script>
+
+

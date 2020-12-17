@@ -1,0 +1,51 @@
+/* 按钮的box样式*/
+.progress-button {
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	width: 100px;
+
+	margin: 10px;
+}
+
+/* 按钮的样式 */
+.progress-button button {
+	display: block;
+	margin: 0 auto;
+	padding: 0;
+	width: 100px;
+	height: 40px;
+	border: 2px solid #33b35A;
+	border-radius: 40px;
+	background: transparent;
+	color: #1ECD97;
+	letter-spacing: 1px;
+	font-size: 18px;
+	font-family: 'Montserrat', sans-serif;
+	transition: background-color 0.3s, color 0.3s, width 0.3s, border-width 0.3s, border-color 0.3s;
+}
+
+.progress-button button:hover {
+	background-color: #33b35A;
+	color: #fff;
+}
+.progress-button button:hover  a{
+    text-decoration:none;
+	
+	color: #fff;
+}
+.progress-button button:focus {
+	outline: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+

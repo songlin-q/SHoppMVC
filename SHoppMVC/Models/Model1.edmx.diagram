@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6fce573ece3f4e99bc4097253b082b26" Name="Diagram1">
+        <EntityTypeShape EntityType="ShopModel.accountLog" Width="1.5" PointX="9.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.AdminInfo" Width="1.5" PointX="10" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.adminLog" Width="1.5" PointX="5.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.adminState" Width="1.5" PointX="7.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.Area" Width="1.5" PointX="11.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.article" Width="1.5" PointX="0.75" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.attribute" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.backGoods" Width="1.5" PointX="2.75" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.cart" Width="1.5" PointX="4.75" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.Contacts" Width="1.5" PointX="12.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.Goods" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.goodsImg" Width="1.5" PointX="5.25" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.goodsType" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.income" Width="1.5" PointX="6.75" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.InStorage" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.massage" Width="1.5" PointX="14.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.OrderInfo" Width="1.5" PointX="12.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.orderLog" Width="1.5" PointX="14.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.payment" Width="1.5" PointX="14.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.reply" Width="1.5" PointX="8.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.Resource" Width="1.5" PointX="14.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.role" Width="1.5" PointX="7.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.RoleRight" Width="1.5" PointX="14.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.supplier" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.sysdiagrams" Width="1.5" PointX="16.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.userAddress" Width="1.5" PointX="0.75" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.UserInfo" Width="1.5" PointX="10" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.XFgoodimg" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <AssociationConnector Association="ShopModel.FK_AdminInfo_adminState" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_AdminInfo_role" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_UserInfo_adminState" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_Goods_attribute" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_Goods_goodsType" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_goodsImg_Goods" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_XFgoodimg_Goods" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_InStorage_supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_OrderInfo_UserInfo" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

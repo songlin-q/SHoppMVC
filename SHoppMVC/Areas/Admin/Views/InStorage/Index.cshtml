@@ -1,0 +1,223 @@
+﻿
+@model PagedList.IPagedList<SHoppMVC.Models.InStorage>
+@using PagedList.Mvc;
+@{
+    Layout = null;
+    ViewBag.Title = "入库管理";
+    ViewBag.nav = "入库管理";
+}
+<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+@* 时间控件 *@
+<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+@*页面样式 *@
+<link rel="stylesheet" href="https://www.jq22.com/jquery/font-awesome.4.7.0.css">
+<link href="~/Areas/Admin/content/css/button/component.css" rel="stylesheet" />
+<link href="~/Areas/Admin/content/css/button/hoverStyle.css" rel="stylesheet" />
+
+
+<div>
+    <div class="row">
+        <div class="col-md-9">
+            <a href="javascript:sliter(0)" class="btna btnaHover">所有</a>
+            <a href="javascript:sliter(2)" class="btna">未审核</a>
+            <a href="javascript:sliter(1)" class="btna">已审核</a>
+        </div>
+        <div class="col-md-3">
+            <a href="../InStorage/Add" class="fa fa-truck" id="add" style="font-size:50px;text-decoration-line:none;" title="入库">
+                @*<input type="button"  id="add" class="fa fa-truck" />*@
+                
+            </a>
+
+        </div>
+
+    </div>
+
+@using (Html.BeginForm())
+{
+        <div>
+            @Html.TextBox("InstorageSn", null, new { @placeholder = "请输入编号" })
+            时间：
+            @Html.TextBox("Startdate", null, new { @class = "form_datetime", @placeholder = "请输入开始时间" })
+            <span>-</span>@Html.TextBox("Enddate", null, new { @class = "form_datetime", @placeholder = "请输入结束时间" })
+            <div class="progress-button">
+                <button type="submit" id="search">搜 索</button>
+            </div>
+            <div class="progress-button">
+                <button type="submit" id="audit">审 核</button>
+            </div>
+            <div class="progress-button">
+                <button type="submit" id="search">@Html.ActionLink("导出", "excelout")</button>
+            </div>
+        </div>
+
+        @Html.Hidden("IsAudit")
+        <table class="table">
+            <tr>
+                <th>
+                    <input type="checkbox" id="chkall" onclick="GetAllCheckbox(this)" />
+                </th>
+                <th>
+                    入库单号
+                </th>
+                <th>
+                    入库类型
+                </th>
+                <th>
+                    商品编码
+                </th>
+                <th>
+                    供应商编码
+
+
+                </th>
+
+                <th>
+                    供应商名称
+                </th>
+                <th>
+                    入库数量
+                </th>
+
+                <th>进货单价</th>
+                <th>总金额</th>
+                <th>审核状态</th>
+                <th>制单人</th>
+                <th>操作类型</th>
+                <th>制单时间</th>
+
+            </tr>
+            @{
+                int Insindex = 0;
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+
+                        @Html.HiddenFor(modelItem => item.Status)
+                        @{
+
+                            Insindex += 1;
+                            var StindexandId = Insindex.ToString() + 'p' + item.InStorageCode;
+
+                        }
+                        <input type="checkbox" name="InChk" value="@StindexandId" id="@item.ID" />
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InStorageCode)
+
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InType)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.goodsSn)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.supplier.supplierCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.supplier.supplierName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Num)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @{
+                            if (item.Status == 2)
+                            {
+                                <p>未审核</p>
+                            }
+                            else
+                            {
+                                <p>审核</p>
+                            }
+                        }
+
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateUser)
+                    </td>
+                    <td>
+                        <p>电脑</p>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateTime)
+
+
+                    </td>
+                </tr>
+                            }
+        </table>
+                            }
+
+    共 @Model.PageCount 页，当前 @Model.PageNumber 页
+    @Html.PagedListPager(Model, pagenum => Url.Action("Index", new { pagenum }))
+</div>
+
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/layer-v3.1.1/layer/layer.js"></script>
+
+
+<script>
+    //////////////////////全选操作//////////////////////
+    function GetAllCheckbox(parentName) {
+        var ch = document.getElementsByTagName("input");
+        for (var i = 0; i < ch.length; i++) {
+            if (parentName.checked) {
+                if (ch[i].type == "checkbox") {
+                    ch[i].checked = true;
+                    //价格循环遍历累加
+
+                }
+            }
+            else {
+                if (ch[i].type == "checkbox") {
+                    ch[i].checked = false;
+                }
+            }
+        }
+    }
+    ///////////////////////////
+    //日期控件
+    $('.form_datetime').datetimepicker({
+        weekStart: 0, //一周从哪一天开始
+        todayBtn: 1, //
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+
+
+
+        //支付条件
+        function sliter(typeid) {
+
+            document.getElementById("IsAudit").value = typeid;
+            $("#search").trigger("click");
+           
+
+        }
+
+
+</script>

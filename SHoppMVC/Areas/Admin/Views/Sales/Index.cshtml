@@ -1,0 +1,246 @@
+﻿@model PagedList.IPagedList<SHoppMVC.Areas.Admin.Models.SalesManage>
+@using PagedList.Mvc
+@{
+    Layout = null;
+    ViewBag.Title = "促销商品";
+    ViewBag.nav = "促销商品";
+}
+@* 弹出层相关引用 *@
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<link href="~/Scripts/layer-v3.1.1/layer/mobile/need/layer.css" rel="stylesheet" />
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/layer-v3.1.1/layer/layer.js"></script>
+
+@*页面样式 *@
+<link rel="stylesheet" href="https://www.jq22.com/jquery/font-awesome.4.7.0.css">
+<link href="~/Areas/Admin/content/css/button/component.css" rel="stylesheet" />
+<link href="~/Areas/Admin/content/css/button/hoverStyle.css" rel="stylesheet" />
+<style>
+      /*弹出层按钮的背景颜色*/
+    body .layui-layer-molv .layui-layer-btn a {
+        background-color: #41A945;
+        color: white;
+    }
+    #addtable input {
+        width: 100px;
+    }
+    #addtable>tr{
+       margin-top:40px;
+    }
+    #addtable td {
+        padding-left: 10px;
+    }
+       
+    .layui-layer-btn0 {
+    background-color:#33B35A;
+
+    }
+</style>
+
+
+<link rel="stylesheet" type="text/css" href="~/Content//common.css" />
+
+@using (Html.BeginForm())
+{
+    <div>
+<div>
+            商品名称：@Html.TextBox("goodsname", null, new { @placeholder = "请输入商品名称" }) &nbsp;
+            商品类型：@Html.TextBox("goodstype", null, new { @placeholder = "请输入商品类型"  }) &nbsp;
+    <div class="progress-button">
+        <button type="submit" id="search">搜 索</button>
+    </div>
+    <div class="progress-button">
+        <button type="submit" id="search">@Html.ActionLink("导出", "excelout")</button>
+    </div>
+        <br />
+        </div>
+
+        <div class="bs-example" data-example-id="hoverable-table">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            商品类型
+                        </th>
+                        <th>
+                            商品名称
+                        </th>
+                        <th>
+                            供应商
+                        </th>
+                        <th>
+                            商品数量
+                        </th>
+                        <th>
+                            市场价格
+                        </th>
+                        <th>
+                            促销价格
+                        </th>
+                        <th>
+                            促销日期
+                        </th>
+                        <th>
+                            是否促销
+                        </th>
+
+                        <th>
+                            邮递费用
+                        </th>
+                        <th>
+                            销售数量
+                        </th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  @foreach (var item in Model)
+                  {
+                        <tr>
+                            <td>
+                                @item.TypeName
+                            </td>
+                            <td>
+                                @item.goodsName
+                            </td>
+                            <td>
+                                @item.sipplierName
+                            </td>
+                            <td>
+                                @item.goodsNumber
+                            </td>
+                            <td>
+                                @item.marketprice.00元
+                            </td>
+                            <td>
+                                @item.promoteprice.00元
+                            </td>
+                            <td>
+                                @item.promoteStartDate
+                            </td>
+                            <td>
+                                @if (item.isShipping == 0)
+                                {
+                                    <p>无促销</p>
+                                }
+                                else
+                                {
+                                    <p>促销商品</p>
+                                }
+                            </td>
+
+                            <td>
+                                @item.postage.00元
+                            </td>
+                            <td>
+                                @item.salesVolume
+                            </td>
+                            <td>
+                                <a href="#" onclick="editAjax( @item.ID )" class="fa fa-pencil-square-o" style = "font-size:18px;"> </a>
+                                @Html.ActionLink("  ", "delete",null, new { id = item.ID },new { @class = "fa fa-times", @style = "font-size:18px;" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+  }
+
+<!-- 弹出框添加 -->
+
+<div id="add_Brand" style="display:none;padding:20px;">
+    <form autocomplete="off" id="sub_form" method="post" class="layui-form" onsubmit="">
+        <table id="addtable" class="layui-table" style="font-size:15px;margin-left:50px;">
+            <tr style="margin:10px;">
+                <td><label class="layui-form-label">商品名称:</label></td>
+                <td >@Html.TextBox("goodsName", null, new { @class = "layui-input " , @disabled = "disabled" })</td>
+                <td><label class="layui-form-label">商品数量:</label></td>
+                <td>@Html.TextBox("goodsNumber", null, new { @class = "layui-input", @disabled = "disabled" })</td>
+            </tr>
+            <tr style="height:30px;"></tr>
+            <tr style="margin:10px;">
+                <td><label class="layui-form-label">市场价格:</label></td>
+                <td>@Html.TextBox("marketPrice", null, new { @class = "layui-input", @disabled = "disabled" })</td>
+                <td><label class="layui-form-label">促销价格:</label></td>
+                <td>@Html.TextBox("promotePrice", null, new { @class = "layui-input" })</td>
+            </tr>
+            
+
+            <tr style="display:none;">
+                <td>@Html.TextBox("ID", null, new { @class = "layui-input" })</td>
+                <td>@Html.TextBox("CreateTime", null, new { @class = "layui-input" })</td>
+
+
+            </tr>
+
+        </table>
+    </form>
+</div>
+当前 @Model.PageNumber 页，共 @Model.PageCount 页
+@Html.PagedListPager(Model, pageNum => Url.Action("Index", new {pageNum }))
+
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Areas/Admin/content/js/front.js"></script>
+<script>
+
+
+    function check() {
+
+        $.post('/Sales/Add', $("#sub_form").serialize(), function (data) {
+            location.href = '../Sales/Index';
+            layer.close(layer.index);
+          
+        });
+        return false;
+    }
+
+
+    //编辑层
+    function Edit() {
+        layer.open({
+
+            title: ['编辑', 'background-color:#40a944;color:white;'],
+            type: 1,
+            skin: 'layui-layer-molv',
+            area: ['500px', '260px'],
+            shadeClose: true, //点击遮罩关闭
+            content: $('#add_Brand'),
+            btn: ['确定'],
+
+            yes: function (index) {
+              
+                check();
+            },
+            cancel: function () {
+                //右上角关闭回调
+                location.href = '../Sales/Index';
+                layer.close(layer.index);
+                //return false 开启该代码可禁止点击该按钮关闭
+            }
+
+        });
+    }
+    //Ajax返回ID值，请求一个对象
+    function editAjax(ID)
+    {
+
+        $.post("/Sales/update", { "ID": ID }, function (data) {
+            $("#ID").val(data[0].ID);
+            $("#goodsNumber").val(data[0].goodsNumber);
+            $("#goodsName").val(data[0].goodsName);
+            $("#marketPrice").val(data[0].marketPrice);
+            $("#promotePrice").val(data[0].promotePrice);
+
+            $("#DepartNum>option[value='"+data[0].DepartNum+"']").attr("selected",true);
+            $("#RoleNum>option[value='"+data[0].RoleNum+"']").attr("selected",true);
+            Edit();
+        })
+    }
+</script>

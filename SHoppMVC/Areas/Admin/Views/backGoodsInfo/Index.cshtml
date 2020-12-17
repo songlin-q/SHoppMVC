@@ -1,0 +1,304 @@
+﻿@model IEnumerable<SHoppMVC.Models.backGoods>
+
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+
+@* 弹出层相关引用 *@
+<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<link href="~/Scripts/layer-v3.1.1/layer/mobile/need/layer.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/layer-v3.1.1/layer/layer.js"></script>
+
+@*页面样式 *@
+<link rel="stylesheet" href="https://www.jq22.com/jquery/font-awesome.4.7.0.css">
+<link href="~/Areas/Admin/content/css/button/component.css" rel="stylesheet" />
+<link href="~/Areas/Admin/content/css/button/hoverStyle.css" rel="stylesheet" />
+<style>
+    /*弹出层按钮的背景颜色*/
+    body .layui-layer-molv .layui-layer-btn a {
+        background-color: #41A945;
+        color: white;
+    }
+    
+    #addtable input {
+        width: 100px;
+    }
+
+    #addtable td {
+        padding-left: 10px;
+        width:200px
+    }
+       .aShow {
+        text-decoration: none;
+        padding: 10px;
+        border: 1px solid gray;
+        color: black;
+        background-color: darkgrey;
+    }
+
+        .aShow:hover {
+            text-decoration: none;
+            color: black;
+            background-color: lightgray;
+        }
+
+</style>
+
+
+<link rel="stylesheet" type="text/css" href="~/Content//common.css" />
+<div>
+    <a href="javascript:showType(2)" class="btna btnaHover">所有</a>
+    <a href="javascript:showType(1)" class="btna" style="width:100px;">审核未通过</a>
+    <a href="javascript:showType(0)" class="btna" style="width:100px;">审核通过</a>
+</div>
+@using (Html.BeginForm())
+{
+    <div>
+        @using (Html.BeginForm())
+        {
+            <div>
+                @Html.Hidden("inTypes")
+                订单编号：@Html.TextBox("ordercode", null, new { @placeholder = "请输入订单编号" }) &nbsp;
+                <div class="progress-button">
+                    <button type="submit" id="search">搜 索</button>
+                </div>
+                <div class="progress-button">
+                    <button type="submit" id="search">@Html.ActionLink("导出", "excelout")</button>
+                </div>
+                <br />
+            </div>
+        }
+        <div class="bs-example" data-example-id="hoverable-table">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            退货编号
+                        </th>
+                        <th>
+                            订单编号
+                        </th>
+                        <th>
+                            退货类型
+                        </th>
+                        <th>
+                            退款金额
+                        </th>
+                        <th>
+                            退货数量
+                        </th>
+                        <th>
+                            操作人员
+                        </th>
+                        <th>
+                            操作时间
+                        </th>
+                        <th>
+                            退货商品状态
+                        </th>
+                        <th>
+                            退款状态
+                        </th>
+                        <th>
+                            审核状态
+                        </th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.backCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.goodsCode)
+                            </td>
+                            <td>
+                                @if (item.backType == 0)
+                                {
+                                <p>拍错</p>
+                                }
+                                @if (item.backType == 1)
+                                {
+                                <p>不想要</p>
+                                }
+                                @if (item.backType == 2)
+                                {
+                                <p>未按时间发货</p>
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.backGoodsPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.backgoodsNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreateUser)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreateTime)
+                            </td>
+                            <td>
+                                @if (item.statusBack == 0)
+                                {
+                                <p>已收到</p>
+                                }
+                                @if (item.statusBack == 1)
+                                {
+                                <p>未收到</p>
+                                }
+                            </td>
+                            <td>
+                                @if (item.statusRefund == 0)
+                                {
+                                <p>已退款</p>
+                                }
+                                @if (item.statusRefund == 1)
+                                {
+                                <p>未退款</p>
+                                }
+                            </td>
+                            <td>
+                                @if (item.States == 0)
+                                {
+                                <p>已通过</p>
+                                }
+                                @if (item.States == 1)
+                                {
+                                <p>未通过</p>
+                                }
+                            </td>
+
+                            <td>
+                                <a href="#" onclick="editAjax(@item.ID )" class = "fa fa-pencil-square-o" style = "font-size:18px;" > </a>
+                                @Html.ActionLink("  ", "delete",null, new { id = item.ID }, new { onclick = "return confirm('确定要删除吗？')", @class = "fa fa-times", @style = "font-size:18px;" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<!-- 弹出框添加 -->
+
+<div id="add_Brand" style="display:none;padding:20px;">
+    <form autocomplete="off" id="sub_form" method="post" class="layui-form" onsubmit="">
+        <table id="addtable" class="layui-table" style="font-size:15px; ">
+            <tr>
+                <td><label class="layui-form-label">退货编码:</label></td>
+                <td>@Html.TextBox("backCode", null, new { @class = "layui-input ", @disabled = "disabled" })</td>
+                <td><label class="layui-form-label">商品编码:</label></td>
+                <td>@Html.TextBox("goodsCode", null, new { @class = "layui-input", @disabled = "disabled" })</td>
+            </tr>
+            <tr>
+                <td><label class="layui-form-label">退回类型:</label></td>
+                <td>@Html.TextBox("backType", null, new { @class = "layui-input", @disabled = "disabled" })</td>
+                <td><label class="layui-form-label">退款状态:</label></td>
+                <td>@Html.TextBox("statusRefund", null, new { @class = "layui-input" })</td>
+            </tr>
+            <tr>
+                <td><label class="layui-form-label">退货数量:</label></td>
+                <td>@Html.TextBox("backgoodsNumber", null, new { @class = "layui-input", @disabled = "disabled" })</td>
+                <td><label class="layui-form-label">退货状态:</label></td>
+                <td>@Html.TextBox("statusBack", null, new { @class = "layui-input" })</td>
+            </tr>
+            <tr>
+                <td><label class="layui-form-label">退款金额:</label></td>
+                <td>@Html.TextBox("backGoodsPrice", null, new { @class = "layui-input", @disabled = "disabled" })</td>
+                <td><label class="layui-form-label">审核状态:</label></td>
+                <td>@Html.TextBox("States", null, new { @class = "layui-input" })</td>
+            </tr>
+            <tr>
+                <td><label class="layui-form-label">操作人员:</label></td>
+                <td>@Html.TextBox("CreateUser", null, new { @class = "layui-input", @disabled = "disabled" })</td>
+
+            </tr>
+            <tr style="display:none;">
+                <td>@Html.TextBox("ID", null, new { @class = "layui-input" })</td>
+                <td>@Html.TextBox("CreateTime", null, new { @class = "layui-input" })</td>
+
+            </tr>
+
+        </table>
+    </form>
+</div>
+
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Areas/Admin/content/js/front.js"></script>
+<script>
+    //标签
+    function showType(typeId) {
+        document.getElementById("inTypes").value = typeId;
+    }
+
+    function check() {
+
+        $.post('/backGoodsInfo/Add', $("#sub_form").serialize(), function (data) {
+ 
+          
+            location.href = '../backGoodsInfo/Index';
+            layer.close(layer.index);
+        });
+        return false;
+    }
+
+
+    //编辑层
+    function Edit() {
+        layer.open({
+
+            title: ['编辑', 'background-color:#40a944;color:white;'],
+            type: 1,
+            skin: 'layui-layer-molv',
+            area: ['500px', '300px'],
+            shadeClose: true, //点击遮罩关闭
+            content: $('#add_Brand'),
+            btn: ['确定'],
+
+            yes: function (index) {
+                //alert('修改成功');
+                check();
+            },
+            cancel: function () {
+                //右上角关闭回调
+                location.href = '../backGoodsInfo/Index';
+                layer.close(layer.index);
+                //return false 开启该代码可禁止点击该按钮关闭
+            }
+
+        });
+    }
+    //Ajax返回ID值，请求一个对象
+    function editAjax(ID) {
+
+        $.post("/backGoodsInfo/update", { "ID": ID }, function (data) {
+           
+            $("#ID").val(data[0].ID);
+            $("#backCode").val(data[0].backCode);
+            $("#goodsCode").val(data[0].goodsCode);
+            $("#backType").val(data[0].backType);
+            $("#backGoodsPrice").val(data[0].backGoodsPrice);
+            $("#backgoodsNumber").val(data[0].backgoodsNumber);
+            $("#statusBack").val(data[0].statusBack);
+            $("#statusRefund").val(data[0].statusRefund);
+            $("#States").val(data[0].States);
+            $("#CreateUser").val(data[0].CreateUser);
+            $("#CreateTime").val(data[0].CreateTime);
+            $("#DepartNum>option[value='" + data[0].DepartNum + "']").attr("selected", true);
+            $("#RoleNum>option[value='" + data[0].RoleNum + "']").attr("selected", true);
+            Edit();
+        })
+    }
+</script>

@@ -1,0 +1,38 @@
+﻿.Baddress:focus{
+
+ 
+     box-shadow: 3px 3px 3px 1px #888888;
+} 
+
+.Baddress {
+        width: 200px;
+        box-shadow: 3px 3px 3px 1px #888888;
+    }
+
+    .Baddress_Name {
+        font-size: 12px;
+        border-bottom: 1px dashed green;
+    }
+
+    .Baddress_Address {
+        font-size: 15px;
+    }
+
+    .Baddress_Flag {
+        width: 50px;
+        height: 20px;
+        line-height: 20px;
+        background-color: ghostwhite;
+        font-size: 8px;
+        color: white;
+        transform: rotate(9deg);
+        position: relative;
+        margin:0px;
+        opacity:0;
+        background-color: #40A944;
+        right: -76%;
+        top: 15%;
+    }
+.Bassress_Edit {
+    font-size:10px;
+}

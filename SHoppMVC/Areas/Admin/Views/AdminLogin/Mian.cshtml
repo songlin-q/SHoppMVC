@@ -1,0 +1,125 @@
+﻿
+
+@{
+
+    ViewBag.Title = "Mian";
+}
+<style>
+    body {
+      overflow-x:hidden;
+      overflow-y:hidden;
+    }
+    .imga {
+        border-style: none;
+    }
+</style>
+<script>
+	
+    setInterval( function() {
+        var now = new Date();
+        var year = now.getFullYear();
+        var mouth = now.getMonth();
+        var ri = now.getDate();
+        var hour = now.getHours();
+        var minut = now.getMinutes();
+        var sen = now.getSeconds();
+        var day = now.getDay(); 
+
+        document.getElementById("text").textContent = year + "年" + mouth + "月" + ri + "日" + hour + ":" + minut + ":" + sen;
+       
+  },1000);
+
+</script>
+<div style="position:fixed; width:1723px;top:64px;left:200px;background-color:#FFFFFF">
+    <iframe name="iframe1" height="870" width="1720" id="iframe1" style="border:0;padding:2%;" src="ZsMain"></iframe>
+</div>
+<nav class="side-navbar" style="overflow-x:hidden;overflow-y:hidden;">
+    <div class="side-navbar-wrapper">
+        <!-- Sidebar Header-->
+        <div class="sidenav-header d-flex align-items-center justify-content-center">
+            <!-- User Info-->
+            <div class="sidenav-header-inner text-center">
+                <a target='iframe1' href="OurslefPudate"><img src="@ViewBag.Naa " alt="person" class="img-fluid rounded-circle"></a>
+                <h2 class="h5"> @ViewBag.foot</h2>
+                <span id="text"></span>
+            </div>
+            <!-- Small Brand information, appears on minimized sidebar-->
+            <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center"> <strong>B</strong><strong class="text-primary">D</strong></a></div>
+        </div>
+
+        <!-- Sidebar Navigation Menus-->
+        <div class="main-menu">
+            <h5 class="sidenav-heading">HaoLiLai</h5>
+
+            <div>
+
+                @for (int i = 0; i < ViewBag.Data.Count; i++)
+                {
+                    for (int x = 0; x < ViewBag.Dete.Count; x++)
+                    {
+                        if (ViewBag.Dete[x].ParentNum == ViewBag.Data[i].ResNum)
+                        {
+                            if (x >= 1)
+                            {
+                                if (ViewBag.Dete[x].ParentNum != ViewBag.Dete[x - 1].ParentNum)
+                                {
+                                    <ul id="side-main-menu" class="side-menu list-unstyled">
+                                        <li>
+                                            @{
+                                                string str = "exampledropdownDropdown" + @ViewBag.Data[i].ID;
+                                                string sss = "#exampledropdownDropdown" + @ViewBag.Data[i].ID;
+                                            }
+                                            <a href=@sss aria-expanded="false" data-toggle="collapse">
+                                                <i class="@ViewBag.Data[i].img"></i>
+                                                @ViewBag.Data[i].ResName
+                                            </a>
+
+                                            @for (int j = 0; j < ViewBag.Dete.Count; j++)
+                                {
+                                    if (ViewBag.Dete[j].ParentNum == ViewBag.Data[i].ResNum)
+                                    {
+                                                    <ul id=@str class="collapse list-unstyled ">
+                                                        <li><a target='iframe1' href="@ViewBag.Dete[j].url">@ViewBag.Dete[j].ResName</a></li>
+                                                    </ul>
+
+                                                }
+                                            }
+                                        </li>
+                                    </ul>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <ul id="side-main-menu" class="side-menu list-unstyled">
+                                                        <li>
+                                                            @{
+                                                                string str = "exampledropdownDropdown" + @ViewBag.Data[i].ID;
+                                                                string sss = "#exampledropdownDropdown" + @ViewBag.Data[i].ID;
+                                                            }
+                                                            <a href=@sss aria-expanded="false" data-toggle="collapse">
+                                                                <i class="@ViewBag.Data[i].img"></i>
+                                                                @ViewBag.Data[i].ResName
+                                                            </a>
+
+                                                            @for (int j = 0; j < ViewBag.Dete.Count; j++)
+                                                            {
+                                                                if (ViewBag.Dete[j].ParentNum == ViewBag.Data[i].ResNum)
+                                                                {
+                                                                    <ul id=@str class="collapse list-unstyled ">
+                                                                        <li><a target='iframe1' href="@ViewBag.Dete[j].url">@ViewBag.Dete[j].ResName</a></li>
+                                                                    </ul>
+
+                                                                }
+                                                            }
+                                                        </li>
+                                                    </ul>
+                                                                            }
+
+                                                                        }
+                                                                    }
+                                                                }
+            </div>
+        </div>
+    </div>
+</nav>
+

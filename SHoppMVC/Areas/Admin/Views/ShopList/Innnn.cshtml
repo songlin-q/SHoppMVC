@@ -1,0 +1,12 @@
+﻿@model SHoppMVC.Models.Goods
+@{
+    ViewBag.Title = "Innnn";
+}
+
+<h2>Innnn</h2>
+
+@using (Html.BeginForm())
+{
+    <p>用户名：<input name="LoginId" type="text" value="@(Model!=null?Model.goodsSn:"")" />@Html.ValidationMessage("goodsSn")</p>
+    <input type="submit" value="提交" />
+}

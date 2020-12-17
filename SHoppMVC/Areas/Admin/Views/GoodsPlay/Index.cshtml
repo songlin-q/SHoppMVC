@@ -1,0 +1,101 @@
+﻿@model PagedList.IPagedList<SHoppMVC.Models.supplier>
+@using PagedList.Mvc;
+
+@{
+    Layout = null;
+    ViewBag.Title = "供应商管理";
+}
+
+<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+@*页面样式 *@
+<link rel="stylesheet" href="https://www.jq22.com/jquery/font-awesome.4.7.0.css">
+<link href="~/Areas/Admin/content/css/button/component.css" rel="stylesheet" />
+<link href="~/Areas/Admin/content/css/button/hoverStyle.css" rel="stylesheet" />
+<script>
+    function showDiv( )
+    {
+        window.open("Add", "iframe1");
+        window.close();
+    }
+</script>
+@using (Html.BeginForm())
+{
+    @Html.Label("文章主题或发表人:")
+    @Html.TextBox("Name", null, new { @class = "text-danger" })
+    <div class="progress-button">
+        <button type="submit" id="search">搜 索</button>
+    </div>
+    <div class="progress-button">
+        <button type="submit" id="search">@Html.ActionLink("导出", "excelout")</button>
+    </div>
+
+}
+<table class="table">
+    <tr>
+    <th>
+        供应商编号
+    </th>
+    <th>
+        供应商名称
+    </th>
+    <th>
+        公司名称
+    </th>
+    <th>
+        地址
+    </th>
+    <th>
+        电话
+    </th>
+    <th>
+        邮箱
+    </th>
+    <th>
+        规模
+    </th>
+    <th>
+        备注
+    </th>
+    </tr>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.supplierCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.supplierName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.companyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.guimo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Remark)
+        </td>
+            <td>
+                @Html.ActionLink("  ", "Add", null, new { @class = "fa fa-plus", @style = "font-size:18px;" })
+                <a href="Pudate?id=@item.ID" class = "fa fa-pencil-square-o" style = "font-size:18px;"> </a>
+                @Html.ActionLink("   ", "Delete",null, new { id = item.ID }, new { onclick = "return confirm('确定要删除吗？')", @class = "fa fa-times", @style = "font-size:18px;" })
+            </td>
+   </tr>
+            }
+
+</table>
+ 共 @Model.PageCount 页，当前 @Model.PageNumber 页 
+@Html.PagedListPager(Model, pagenum => Url.Action("Index", new { pagenum, @class = "button" }))
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Areas/Admin/content/js/front.js"></script>

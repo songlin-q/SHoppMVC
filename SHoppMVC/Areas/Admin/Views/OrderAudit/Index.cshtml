@@ -1,0 +1,153 @@
+﻿
+@model PagedList.IPagedList<SHoppMVC.Models.OrderInfo>
+@using PagedList.Mvc;
+@{
+    Layout = null;
+    ViewBag.Title = "订单审核";
+    ViewBag.nav = "订单审核";
+}
+
+<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+@* 时间控件 *@
+<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+@*页面样式 *@
+<link rel="stylesheet" href="https://www.jq22.com/jquery/font-awesome.4.7.0.css">
+<link href="~/Areas/Admin/content/css/button/component.css" rel="stylesheet" />
+<link href="~/Areas/Admin/content/css/button/hoverStyle.css" rel="stylesheet" />
+
+
+
+<div>
+    <div>
+        <a href="javascript:sliter(2)" class="btna btnaHover">所有</a>
+        <a href="javascript:sliter(0)" class="btna">未审核</a>
+        <a href="javascript:sliter(1)" class="btna">已审核</a>
+    </div>
+    @using (Html.BeginForm())
+    {
+        <div>
+            @Html.TextBox("orderSn", null, new { @placeholder = "请输入订单号" })
+            时间：
+            @Html.TextBox("Startdate", null, new { @class = "form_datetime",@placeholder = "请输入开始时间" } )
+            <span>-</span>@Html.TextBox("Enddate", null, new { @class = "form_datetime",@placeholder = "请输入结束时间" } )
+            <div class="progress-button">
+                <button type="submit" id="search">搜 索</button>
+            </div>
+            <div class="progress-button">
+                <button type="submit" id="search">@Html.ActionLink("导出", "excelout")</button>
+            </div>
+        </div>
+
+        @Html.Hidden("IsAudit")
+        <table class="table">
+            <tr>
+                <th>
+                    订单编号
+                </th>
+                <th>
+                    商品编码
+                </th>
+                <th>
+                    配送状态
+                </th>
+                <th>
+                    支付状态
+                </th>
+               
+                <th>
+                    订单生成时间
+                </th>
+               
+
+                <th>操作</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.orderSn)
+
+                    </td>
+
+                   
+                    <td>
+                        @Html.DisplayFor(modelItem => item.goodsSn)
+                    </td>
+               
+                         <td>
+                        @if (item.shippingStatus == 0)
+                        {
+                            <p>暂无物流</p>
+                        }
+                        else if (item.shippingStatus == 1)
+                        {
+                            <p>运输中</p>
+                        }
+                        else
+                        {
+                            <p>运输完成</p>
+                        }
+
+                    </td>
+
+
+             
+                    <td>
+                        @if (item.payState == 0)
+                    {
+                            <p>未支付</p>
+                        }
+                        else
+                        {
+                            <p>已支付</p>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.addTime)
+                    </td>
+
+                    <td>
+                        @if (item.shippingStatus == 0)
+                        {
+                            @Html.ActionLink("  ", "Audit",null, new { ID = item.ID },new{ @class = "fa fa-check-square-o",@style = "font-size:16px;",@title="审核" })
+                        }
+                      <a id="@item.ID " href="../Order/Look?ID=@item.ID" class = "fa fa-file-text-o" style = "font-size:16px;"> </a>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+
+    共 @Model.PageCount 页，当前 @Model.PageNumber 页
+    @Html.PagedListPager(Model, pagenum => Url.Action("Index", new { pagenum }))
+</div>
+
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Areas/Admin/content/js/front.js"></script>
+<script>
+
+    //日期控件
+    $('.form_datetime').datetimepicker({
+        weekStart: 0, //一周从哪一天开始
+        todayBtn: 1, //
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+    //支付条件
+    function sliter(typeid) {
+
+        document.getElementById("IsAudit").value = typeid;
+        $("#search").trigger("click");
+    }
+
+</script>

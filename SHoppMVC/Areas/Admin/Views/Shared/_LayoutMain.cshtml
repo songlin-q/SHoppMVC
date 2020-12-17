@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>好利来后台管理系统</title>
+
+
+    <link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+    <link rel="stylesheet" href="https://www.jq22.com/jquery/font-awesome.4.7.0.css">
+    <link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" href="~/Areas/Admin/content/css/grasp_mobile_progress_circle-1.0.0.min.css">
+    <link rel="stylesheet" href="~/Areas/Admin/content/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="~/Areas/Admin/content/css/custom.css">
+</head>
+<body>
+
+    <div class="page">
+        <header class="header">
+            <nav class="navbar">
+                <div class="container-fluid">
+                    <div class="navbar-holder d-flex align-items-center justify-content-between">
+                        <div class="navbar-header">
+                            <a id="toggle-btn" href="#" class="menu-btn"><i class="icon-bars"> </i></a><a href="index.html" class="navbar-brand">
+                                <div class="brand-text d-none d-md-inline-block"><strong class="text-primary">好利来后台管理系统</strong></div>
+                            </a>
+                        </div>
+                        <div class="right">
+                            <a href="AdminLogins"><p style="margin-top:10px; color:aquamarine;text-decoration:none;"><i class="fa fa-power-off" aria-hidden="true"></i>&nbsp;&nbsp;注销</p></a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        
+        <div style="margin-left:3%;margin-top:2%;">
+            首页>@ViewBag.nav
+            <br />
+            <br />
+                @RenderBody()
+
+           </div>
+        
+    </div>
+
+
+    <script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <script src="~/Areas/Admin/content/vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+    <script src="~/Areas/Admin/content/js/grasp_mobile_progress_circle-1.0.0.min.js"></script>
+    <script src="~/Areas/Admin/content/vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="~/Areas/Admin/content/vendor/chart.js/Chart.min.js"></script>
+    <script src="~/Areas/Admin/content/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/Areas/Admin/content/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/Areas/Admin/content/js/charts-home.js"></script>
+    <script src="~/Areas/Admin/content/js/front.js"></script>
+   
+</body>
+</html>

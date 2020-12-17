@@ -1,0 +1,108 @@
+﻿@model IEnumerable<SHoppMVC.Models.AdminInfo>
+
+@{
+    Layout = null;
+    ViewBag.Title = "Ourslef";
+}
+<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+<table class="table">
+    <tr>
+        <th>
+            头像
+        </th>
+        <th>
+            用户编号
+        </th>
+        <th>
+            用户名称
+        </th>
+        <th>
+            真实姓名
+        </th>
+        <th>
+            密码
+        </th>
+        <th>
+            电话
+        </th>
+        <th>
+            邮箱
+        </th>
+        <th>
+            创建时间
+        </th>
+        <th>
+            登陆状态
+        </th>
+        <th>
+            角色属性
+        </th>
+        <th>
+            备注
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img width="30" height="30" src="@Url.Content(item.img)" alt="" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.userCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.userName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.realName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.telephone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.createTime)
+            </td>
+            <td>
+                @if (item.state == 2)
+                {
+                    @Html.Label("正常")
+                }
+                else
+                {
+                    @Html.Label("失效")
+                }
+            </td>
+            <td>
+                @if (item.roleCode == 1)
+                {
+                    @Html.Label("管理员")
+                }
+                else
+                {
+                    @Html.Label("普通用户")
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remark)
+            </td>
+            <td>
+                <a href="OurslefPudate?id=@item.ID" class="btn btn-primary">修改</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Areas/Admin/content/js/front.js"></script>

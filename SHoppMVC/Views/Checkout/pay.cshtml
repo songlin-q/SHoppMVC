@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "支付页面";
+    ViewBag.count = ViewBag.cartnum;
+    ViewBag.Loginname = ViewBag.login;
+}
+
+<link href="~/assets/css/pay.css" rel="stylesheet" />
+<link href="~/assets/css/paystyle.css" rel="stylesheet" />
+@using (Html.BeginForm())
+{
+
+    <div class="coupon_area payMain">
+        <div class="row">
+            <div class="col-md-1">
+
+            </div>
+            <div class="col-md-10">
+                <div class="coupon_code right">
+                    <h3 style="background-color:green;">还差一步就抢到心爱的商品啦，快快支付吧~</h3>
+                    <div class="coupon_inner">
+                        <div class="row">
+                            <div class="col-md-7"><h6>共 @ViewBag.orderNumber 张订单，订单详情。</h6></div>
+                            <div class="col-md-4"><h6>待支付：￥<span style="font-size:20px;"> @ViewBag.totalprice</span></h6></div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="row">
+                            <div class="Service-box">
+                                <div class="Service-content">
+                                    <a href="javascript:;" class="Service-item">
+                                        <div class="item-image">
+                                            <img src="~/assets/img/pay/icon-tag001.png" alt="" />
+
+                                        </div>
+
+                                        <div class="item-text">用户在商家网站上完成付款</div>
+
+                                    </a>
+
+
+                                    <a href="javascript:;" class="Service-item">
+                                        <div class="item-image">
+                                            <img src="~/assets/img/pay/icon-tag004.png" alt="" />
+
+                                        </div>
+
+                                        <div class="item-text">只需扫描用户的付款码，或用户扫描商家的二维码完成付款</div>
+
+                                    </a>
+                                    <a href="javascript:;" class="Service-item">
+                                        <div class="item-image">
+                                            <img src="~/assets/img/pay/icon-tag005.png" />
+
+                                        </div>
+
+                                        <div class="item-text">支付宝最新收钱工具，收钱、提钱均免费</div>
+                                        <div class="item-background">
+                                            <img src="~/assets/img/pay/icon-tag-bj.png" alt="" />
+
+                                        </div>
+                                        <div class="item-tag">免手续费</div>
+
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row payType">
+                            <section class="col-md-12"><div class="payLogo">好利来支付</div></section>
+                            <div class="col-md-12">@Html.RadioButton("payId", "1", true, new { @style = "height:15px;width:5%;" })<span>微信</span><br /></div>
+                            <div class="col-md-12">@Html.RadioButton("payId", "2", new { @style = "height:15px;width:5%;" })<span>支付宝</span><br /></div>
+                            <div class="col-md-12">@Html.RadioButton("payId", "3", new { @style = "height:15px;width:5%;" })<span>网银</span><br /></div>
+                            <div class="col-md-12">@Html.RadioButton("payId", "4", new { @style = "height:15px;width:5%;" })<span>银行卡</span><br /></div>
+
+                        </div>
+                        <div class="checkout_btn">
+                            <div class="cart_submit">
+                                <button type="submit" style="width:200px; font-size:20px;">结  账</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<script>
+    ////页面关闭之前
+    //window.onbeforeunload = function () {
+    //    $.post("/Checkout/change", { username: null });
+    //};
+</script>

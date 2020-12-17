@@ -1,0 +1,210 @@
+﻿
+@model PagedList.IPagedList<SHoppMVC.Models.Goods>
+@using PagedList.Mvc;
+@{
+    Layout = null;
+    ViewBag.Title = "商品管理";
+
+}
+<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+<link rel="stylesheet" href="https://www.jq22.com/jquery/font-awesome.4.7.0.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+<link href="~/Areas/Admin/content/css/button/component.css" rel="stylesheet" />
+<link href="~/Areas/Admin/content/css/button/hoverStyle.css" rel="stylesheet" />
+   <style>
+
+    .DropList {
+        width: 164px;
+        height: 27px;
+    }
+       .shopTable  tr  td {
+              padding-top:2%;
+              padding-bottom:0px;
+       }
+       .progress-button {
+           margin-top:-5px;
+       }
+</style>
+@using (Html.BeginForm())
+{
+    <table class="table shopTable" >
+        <tr >
+            <td>
+                是否包邮：
+            </td>
+            <td>
+                @Html.DropDownList("Isbaoyou", null, new { @class = "DropList" })
+            </td>
+            <td>
+                商品的类型:
+            </td>
+            <td>
+                @Html.DropDownList("GoodsType", null, new { @class = "DropList" })
+            </td>
+            <td>
+                供应商:
+            </td>
+            <td>
+                @Html.DropDownList("supper", null, new { @class = "DropList" })
+            </td>
+            <td>
+                是否促销:
+            </td>
+            <td>
+                @Html.DropDownList("isshoping", null, new { @class = "DropList" })
+            </td>
+            <td>
+                销售数量:
+            </td>
+            <td>
+                @Html.TextBox("salenums", null, new { @placeholder = "请输入销售数量" })
+            </td>
+            <td>
+          
+                <div class="progress-button">
+                    <button type="submit" id="search">搜 索</button>
+                </div>
+                <div class="progress-button">
+                    <button type="submit" id="search">@Html.ActionLink("导出", "excelout")</button>
+                </div>
+   
+            </td>
+        </tr>
+    </table>
+}
+
+<table class="table">
+    <tr style="background-color:#f9f9f9;">
+        <th>
+          商品类型
+        </th>
+        <th>
+          商品名称
+        </th>
+        <th>
+         供应商
+        </th>
+        <th>
+            商品数量
+        </th>
+        <th>
+            市场价格
+        </th>
+        <th>
+            促销价格
+        </th>
+        <th>
+            促销日期
+        </th>
+        <th>
+            是否促销
+        </th>
+        <th>
+           添加日期
+        </th>
+        <th>
+            是否删除
+        </th>
+        <th>
+           是否包邮
+        </th>
+        <th>
+           最近修改日期
+        </th>
+        <th>
+         邮递费用
+        </th>
+        <th>
+          销售数量
+        </th>
+        <th>操作</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+         @Html.DisplayFor(modelItem => item.goodsType.typeNarme)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.goodsName)
+        </td>
+
+        <td>
+            @if (item.supplier==1)
+            {
+                <p>四川蔬菜批发商</p>
+            }
+            @if (item.supplier == 3)
+            {
+                <p>四川九龙水果批发公司</p>
+            }
+            @if (item.supplier == 4)
+            {
+                <p>四川海鲜市场批发商</p>
+
+            }
+            @if (item.supplier == 5)
+                {
+                <p>四川大胖子批发</p>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.goodsNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.marketPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.promotePrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.promoteStartDate)
+        </td>
+        <td>
+            @if (item.isShipping == 1)
+            {
+                <p>有促销</p>
+            }
+            else
+            {
+                <p>无促销</p>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.addTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isDelete)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isPromote)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lastUpdate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.postage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.salesVolume)
+        </td>
+        <td>
+            @Html.ActionLink(" ", "ShopManageadd",null,new { @class= "fa fa-plus", @style = "font-size:18px;" })
+          @Html.ActionLink(" ", "ShopManageupdate",null, new { id = item.ID },new { @class = "fa fa-pencil-square-o", @style = "font-size:18px;" })
+            @Html.ActionLink(" ", "ShopManagedelete",null, new { id = item.ID }, new { onclick = "return confirm('确定要删除吗？')", @class = "fa fa-times", @style = "font-size:18px;" })
+            @Html.ActionLink(" ", "ShopManageSee",null, new { id = item.ID },new { @class = "fa fa-file-text-o", @style = "font-size:16px;" })
+        </td>
+    </tr>
+}
+
+</table>
+ 共 @Model.PageCount 页，当前 @Model.PageNumber 页
+
+@Html.PagedListPager(Model,pagenum => Url.Action("ShopManage", new { pagenum}))
+
+
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Areas/Admin/content/js/front.js"></script>

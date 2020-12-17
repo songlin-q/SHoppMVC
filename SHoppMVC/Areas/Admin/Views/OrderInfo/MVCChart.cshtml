@@ -1,0 +1,30 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.nav = "订单汇总";
+    ViewBag.Title = "MVCChart";
+}
+<style>
+    #table {
+        width: 800px;
+        position: relative;
+        left: -40px;
+    }
+</style>
+
+<div id="table">
+    <table style="width: 80%;overflow-y:hidden;">
+        <tr>
+            <td>
+                <img src="@Url.Action("R_salesVolume")" alt="主张图" />
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <img src="@Url.Action("pie_Price")" alt="主张图" />
+            </td>
+        </tr>
+    </table>
+
+</div>
+

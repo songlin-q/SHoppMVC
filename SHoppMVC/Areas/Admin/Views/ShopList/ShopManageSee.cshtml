@@ -1,0 +1,258 @@
+﻿@model SHoppMVC.Models.Goods
+@{
+    Layout = null;
+    ViewBag.Title = "商品信息的查看";
+    ViewBag.nav = "商品管理>商品管理的查看";
+}
+<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+
+
+
+@* 按钮的样式 *@
+<link href="~/Areas/Admin/content/css/button/component.css" rel="stylesheet" />
+<style>
+    .tdwidth {
+        width: 140px;
+    }
+
+    tr {
+        height: 50px;
+    }
+</style>
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <br /><br /><br />
+                <h3 style="border-bottom:2px solid #33b35A;padding-bottom:10px;">商品详情</h3>
+
+                <table class="table" style="color:black;font-size:20px;margin-top:6%;">
+                    <tr style="background-color:#f9f9f9;">
+                        <td class="tdwidth">@Html.DisplayName("商品编号:")</td>
+                        <td style="width:190px;"> @Html.DisplayFor(model => model.goodsSn)</td>
+                        <td class="tdwidth">
+                            @Html.DisplayName("商品名称:")
+                        </td>
+                        <td style="width:190px;">  @Html.DisplayFor(model => model.goodsName)</td>
+
+                        <td class="tdwidth">@Html.DisplayName(" 商品类型:")</td>
+                        <td style="width:170px;">
+                            @if (Model.goodType == 2)
+                            {
+                                <p>蔬菜</p>
+                            }
+                            @if (Model.goodType == 3)
+            {
+                                <p>水果</p>
+                            }
+                            @if (Model.goodType == 4)
+            {
+                                <p>海鲜</p>
+                            }
+                            @if (Model.goodType == 5)
+            {
+                                <p>鲜肉</p>
+                            }
+                        </td>
+
+
+                    </tr>
+                    <tr>
+
+                        <td class="tdwidth">
+                            @Html.DisplayName("点击数:")
+                        </td>
+                        <td>
+                           @Html.DisplayFor(model => model.clickCount)
+                        </td>
+
+                        <td class="tdwidth">
+                            @Html.DisplayName("供应商:")
+                        </td>
+                        <td>
+
+                            @if (Model.supplier == 1)
+                            {
+                                <p> 四川蔬菜批发商</p>
+                            }
+                            @if (Model.supplier == 3)
+            {
+                                <p> 四川九龙水果批发公司</p>
+                            }
+                            @if (Model.supplier == 4)
+            {
+                                <p> 四川海鲜市场批发商</p>
+                            }
+                            @if (Model.supplier == 5)
+            {
+                                <p> 四川蔬菜四川大胖子批发批发商</p>
+                            }
+
+                        </td>
+                        <td class="tdwidth">
+                            @Html.DisplayName("商品数量:")
+                        </td>
+                        <td>  @Html.DisplayFor(model => model.goodsNumber)</td>
+
+
+
+                    </tr>
+                    <tr>
+
+                        <td class="tdwidth">@Html.DisplayName("商品宽度:") </td>
+                        <td style="width:170px;">@Html.DisplayFor(model => model.goodsWeight)</td>
+
+
+                        <td class="tdwidth">
+                            @Html.DisplayName("市场价格:")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.marketPrice)
+                        </td>
+
+
+                        <td class="tdwidth">
+                            @Html.DisplayName("商品促销价格:")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.promotePrice)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdwidth">@Html.DisplayName("促销日期:")</td>
+                        <td style="width:170px;">
+                            @Html.DisplayFor(model => model.promoteStartDate)
+                        </td>
+                        <td class="tdwidth">
+                            @Html.DisplayName("商品关键字:")
+                        </td>
+                        <td style="width:190px;">  @Html.DisplayFor(model => model.keywords)</td>
+                        <td class="tdwidth">
+                            @Html.DisplayName(" 是否上架:")
+                        </td>
+                        <td style="width:190px;">  
+                            @if (Model.isOnSale == 1)
+                            {
+                                <p>已经上架</p>
+                            }
+                            @if (Model.isOnSale == 0)
+            {
+                                <p>未上架</p>
+                            }
+
+                        
+                        </td>
+
+
+
+
+                    </tr>
+                    <tr>
+
+
+                        <td class="tdwidth">
+                            @Html.DisplayName("是否促销:")
+                        </td>
+                        <td style="width:190px;"> 
+                            @if (Model.isShipping == 1)
+                            {
+                                <p>有促销</p>
+                            }
+                            @if (Model.isShipping == 2)
+            {
+                                <p>没有促销</p>
+                            }
+                        </td>
+
+
+                        <td class="tdwidth">
+                            @Html.DisplayName(" 添加日期:")
+                        </td>
+                        <td style="width:190px;">  @Html.DisplayFor(model => model.addTime)</td>
+
+                        <td class="tdwidth">
+                            @Html.DisplayName(" 是否删除:")
+                        </td>
+                        <td style="width:190px;">  
+                            @if (Model.isDelete == 0)
+                            {
+                                <p>未删除</p>
+                            }
+                            @if (Model.isDelete == 1)
+            {
+                                <p>已经删除</p>
+                            }
+                        </td>
+
+
+                    </tr>
+                    <tr>
+
+                        <td class="tdwidth">@Html.DisplayName("是否包邮:")</td>
+                        <td style="width:170px;">
+
+                            @if (Model.isPromote == 1)
+            {
+                                <p>包邮</p>
+                            }
+                            @if (Model.isOnSale == 2)
+            {
+                                <p>未包邮</p>
+                            }
+                        </td>
+                        <td class="tdwidth">@Html.DisplayName("最后更新时间:") </td>
+                        <td style="width:170px;">@Html.DisplayFor(model => model.lastUpdate)</td>
+
+                        <td class="tdwidth">@Html.DisplayName("邮费:")</td>
+                        <td>@Html.DisplayFor(model => model.postage)</td>
+
+                    </tr>
+                    <tr>
+                        <td class="tdwidth">@Html.DisplayName("销售数量:")</td>
+                        <td style="width:170px;">@Html.DisplayFor(model => model.salesVolume)  </td>
+
+                        <td class="tdwidth">
+                            @Html.DisplayName(" 属性:")
+                        </td>
+                        <td>
+                            
+                            @if (Model.attrId == 1)
+                            {
+                                <p>重量</p>
+                            }
+                            @if (Model.attrId == 2)
+            {
+                                <p>个数</p>
+                            }
+                            @if (Model.attrId == 3)
+            {
+                                <p>毫升</p>
+                            } 
+                        </td>
+
+                     
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+<div style="margin-left:17%;text-decoration:none;">
+    <div class="progress-button">
+        <button type="submit" id="search">@Html.ActionLink("返回", "ShopManage")</button>
+    </div>
+    @*@Html.ActionLink(" ", "Index", null, new { @class = "fa fa-arrow-left", @style = "font-size:40px;" })*@
+</div>
+
+
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Areas/Admin/content/js/front.js"></script>
+

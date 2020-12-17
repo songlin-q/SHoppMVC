@@ -1,0 +1,94 @@
+﻿@model SHoppMVC.Models.Contacts
+
+@{
+
+    ViewBag.Title = "联系我们";
+    ViewBag.count = ViewBag.cartnum;
+    ViewBag.Loginname = ViewBag.login;
+}
+
+@using (Html.BeginForm("Index", "Contact", FormMethod.Post))
+{
+
+    <div class="breadcrumbs_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                        <div class="section_title">
+                            <p>好利来购物网站</p>
+                            <h2>联系我们</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact_map mt-70">
+
+    </div>
+
+    <div class="contact_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="contact_message content">
+                        <h3>联系我们</h3>
+                        <p>单簧管是动力突的一部分，它的变异是动力突的一部分。它是人类的一种身体形态。结论：莱克托突变。Mirum est notare码头</p>
+                        <ul>
+                            <li><i class="fa fa-fax"></i>  地址 : No 40 Baria Sreet 133/2 NewYork City</li>
+                            <li><i class="fa fa-phone"></i> <a href="#">信息@roadthemes.com</a></li>
+                            <li><i class="fa fa-envelope-o"></i><a href="tel:0(1234)567890">0(1234) 567 890</a>  </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6">
+                    <div class="contact_message form">
+                        <h3>告诉我们你的计划</h3>
+                        <form id="contact-form" method="POST" action="assets/mail.php">
+                            <p>
+                                您的姓名（必需）
+                        
+                                @Html.TextBox("Name", "", new { @class = "form-control" })
+                            </p>
+                            <p>
+                                <label>  您的电子邮件（必需）</label>
+                             
+                                @Html.TextBox("Email", "", new { @class = "form-control " })
+                            </p>
+                            <p>
+                                <label>  主题</label>
+                    
+                                @Html.TextBox("subject", "", new { @class = "form-control" })
+                            </p>
+                            <div class="contact_textarea">
+                                <label>  你的信息</label>
+                            
+                                @Html.TextArea("information", "", new { @class = "form-control2" })
+                            </div>
+                            <input type="submit" value="发送" class="btn-default" />
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    ////页面关闭之前
+    //window.onbeforeunload = function () {
+    //    $.post("/Contact/change", { username: null });
+    //};
+</script>
+
+
+
+
+
+
+
+
+

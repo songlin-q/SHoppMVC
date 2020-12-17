@@ -1,0 +1,134 @@
+﻿@model SHoppMVC.Models.UserInfo
+
+@{
+    ViewBag.Title = "密码找回";
+    ViewBag.count = ViewBag.cartnum;
+    ViewBag.Loginname = ViewBag.login;
+}
+
+<style>
+    #TbOK {
+        width: 530px;
+        height: 50px;
+        background-color: #40a944;
+        border: none;
+        color: white;
+        position: relative;
+        left: 470px;
+        top:30px;
+    }
+    #log {
+    width:100%;
+    height:120px;
+    position:relative;
+    top:20px;
+    }
+    #log img {
+    position:relative;
+    left:300px;
+    }
+    #main {
+    width:80%;
+    height:500px;
+    position:relative;
+    left:150px;
+    top:30px;
+    }
+        #main table {
+        width:30%;
+        height:300px;
+        position:relative;
+        left:450px;
+        }
+</style>
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <div class="section_title">
+                        <p>好利来购物网站</p>
+                        <h2>修改密码</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm())
+{
+    <div id="main">
+        <table class="table">
+            <tr>
+                <td>电话号码:</td>
+                <td>
+                    @Html.TextBox("Tel")
+                </td>
+            </tr>
+            <tr>
+                <td>验证码:</td>
+                <td>
+                    @Html.TextBox("YZM")
+                </td>
+                <td>
+                    <img src="CreateVerifyCode" id="verifycode" alt="验证码获取失败" title="验证码" style="border:1px solid black;" onclick="window.open('IdentifyingCode');window.close()" />
+                </td>
+            </tr>
+            <tr>
+                <td>新密码:</td>
+                <td>
+                    @Html.TextBox("NPwd")
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="确认" id="TbOK"/>
+    </div>
+    
+}
+<script>
+
+    //验证电话号码不能为空
+    var tel = document.getElementById("Tel");
+    tel.onblur = function () {
+        if (tel.value == "") {
+            tel.value = "*电话不能为空";
+            tel.style.color = "red";
+            tel.focus();
+            return false;
+        }
+        else {
+            //验证电话号码规范
+            var ageReg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if (!ageReg.test(tel.value)) {
+                tel.value = "*请输入正确的电话格式";
+                tel.style.color = "red";
+                tel.focus();
+                return false;
+            }
+        }
+        tel.style.color = "black";
+    }
+
+    //验证密码不能为空
+    var newPwd = document.getElementById("NPwd");
+    newPwd.onblur = function () {
+        if (newPwd.value == "") {
+            newPwd.value = "*密码不能为空";
+            newPwd.style.color = "red";
+            newPwd.focus();
+            return false;
+        }
+        else {
+            //验证用户名称只能是汉字或者字母
+            var reg = /^(\w){6,20}$/;
+            if (!reg.test(newPwd.value)) {
+                newPwd.value = "*只能输入6-20个字母、数字、下划线 ";
+                newPwd.style.color = "red";
+                newPwd.focus();
+                return false;
+            }
+        }
+        newPwd.style.color = "black";
+    }
+
+</script>

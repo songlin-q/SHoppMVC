@@ -1,0 +1,209 @@
+﻿@model SHoppMVC.Models.InStorage
+@{
+    Layout = null;
+    ViewBag.Title = "Add";
+
+}
+<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    #add_Brand tr {
+        margin-top: 5px;
+    }
+
+    .dcolor {
+        border: 1px solid #45a753;
+        font-size: 16px;
+        color: #45a753;
+        width: 150px;
+    }
+
+        .dcolor:hover {
+            border: 1px solid #45a753;
+            width: 150px;
+            font-size: 16px;
+            color: white;
+            background-color: #45a753;
+        }
+
+    .y {
+        height: 30px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+</style>
+
+
+
+@using (Html.BeginForm())
+{
+    <div class="container form-horizontal">
+        <hr />
+
+        <div class="form-group">
+            <div class="col-md-7 col-md-10">
+
+                <input type="submit" value="保  存" class="btn  dcolor" />
+            </div>
+        </div>
+
+        <table class="table ">
+            <tr>
+                <td>入库单编号</td>
+                <td>制单人</td>
+                <td>制单时间</td>
+                <td>供应商编号</td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.Hidden("SupplierID")
+                    @Html.TextBoxFor(model => model.InStorageCode, new { @placeholder = "自动生成，可不填", @readonly = "readonly", @class = "y" })
+
+                </td>
+
+                <td>
+                    @{
+                        string CreateUser = ViewBag.user;
+                    }
+                    @Html.TextBox("CreateUser", "yonghu", new { @readonly = "readonly ", @class = "y" })
+
+                </td>
+                <td>
+                    @if (true)
+                    {
+                        string ddd = DateTime.Now.ToString();
+                        @Html.TextBox("CreateTime", ddd, new { @readonly = "readonly ", @class = "y" })
+
+                    }
+
+                </td>
+                <td>
+                    @if (true)
+                    {
+                        @Html.TextBoxFor(model => model.supplier.supplierCode, "", new { @placeholder = "供应商选择", @readonly = "readonly ", @class = "y" })
+                    }
+
+                </td>
+
+            </tr>
+            <tr>
+                <td>商品</td>
+                <td>供应商名称</td>
+                <td>供应商联系人</td>
+                <td>供应商联系方式</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="#" id="GoodSelec" onclick="showhideGoodSelec()"><input type="button" value="+" class="btn dcolor" /></a>
+                </td>
+                <td>
+                    @if (true)
+                    {
+
+                        string supName = ViewBag.SupName;
+                        @Html.DropDownList("supplierName", (List<SelectListItem>)ViewData["supper"], "请选择", new { @class = "y" })
+
+                    }
+                </td>
+                <td>
+                    @if (true)
+                    {
+                        string phone = ViewBag.Phone;
+                        @Html.TextBoxFor(model => model.supplier.tel, phone, new { @readonly = "readonly ", @class = "y" })
+
+                    }
+                </td>
+                <td>
+                    @if (true)
+                    {
+                        string contactName = ViewBag.ContactName;
+                        @Html.TextBoxFor(model => model.supplier.address, contactName, new { @readonly = "readonly ", @class = "y" })
+
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <div class="btnGoodSelect" style="display:none;">
+                        <iframe id="supframe" frameborder="0" src="GoodSelect" style="width:100%; height:400px; overflow-y:no-display;overflow-x:no-display;"></iframe>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>备注</td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    @Html.TextBoxFor(model => model.Remark, "", new { @style = "width:600px;", @class = "y" })
+                </td>
+            </tr>
+        </table>
+
+        @*产品列表*@
+        <table class="table">
+            <tr>
+                <th>产品名称</th>
+
+                <th>产品编码</th>
+                <th>单价</th>
+
+                <th>入库数</th>
+                <th>总价</th>
+            </tr>
+            @if (ViewBag.goods != null)
+                {
+                    foreach (var item in ViewBag.goods)
+                    {
+                    <tr>
+
+                        <td>@item.goodsName</td>
+                        <td>@item.goodsSn</td>
+
+                        <td>@item.Price</td>
+
+                        <td>@item.num</td>
+                        <td>@item.total</td>
+
+
+                    </tr>
+                }
+
+            }
+
+
+        </table>
+
+
+
+
+
+
+    </div>
+                        }
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Areas/Admin/content/js/front.js"></script>
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/layer-v3.1.1/layer/layer.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    function showhideSupSelec() {
+        $(".btnSupSelect").slideToggle("slow");
+    }
+    function showhideGoodSelec() {
+        $(".btnGoodSelect").slideToggle("slow");
+    }
+    $('select[name=supplierName]').change(function () {
+        var selectIndex = $(this).children('option:selected').text();
+        $.post("/InStorage/Show", { "selectvalue": selectIndex }, function (data) {
+            $("#SupplierID").val(data[0].ID);
+            $("#supplier_supplierCode").val(data[0].supplierCode);
+            $("#supplier_tel").val(data[0].tel);
+            $("#supplier_address").val(data[0].address);
+
+        })
+    })
+</script>

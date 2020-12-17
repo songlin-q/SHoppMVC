@@ -1,0 +1,317 @@
+﻿@model SHoppMVC.Models.userAddress
+
+@{
+    ViewBag.Title = "收货地址";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assets/css/bootCommon.css" rel="stylesheet" />
+<link href="~/assets/css/address.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="Checkout_section mt-70">
+        <div class="container">
+
+            <div class="checkout_form">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <form action="#">
+                            <h3>地址栏</h3>
+
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    @Html.HiddenFor(model => model.userId)
+                                    @Html.HiddenFor(model => model.ID)
+                                    @Html.HiddenFor(model => model.city)
+                                    @Html.HiddenFor(model => model.district)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-10">
+
+                                    <div class="row">
+
+                                        @Html.Label("收货人", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.EditorFor(model => model.consignee, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        @Html.Label("邮箱", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        @Html.Label("省份", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.DropDownListFor(Model => Model.province, (List<SelectListItem>)ViewData["provinceInfo"], "所在省", htmlAttributes: new { @class = "form-control selectType" })
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        @Html.Label("城市", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.DropDownListFor(Model => Model.city, (List<SelectListItem>)ViewData["cityInfo"], "所在市", htmlAttributes: new { @class = "form-control selectType" })
+                                        @Html.Hidden("city")
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        @Html.Label("区", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.DropDownListFor(Model => Model.district, (List<SelectListItem>)ViewData["districtInfo"], "所在区", htmlAttributes: new { @class = "form-control selectType" })
+                                        @Html.Hidden("district")
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        @Html.Label("详细地址", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        @Html.Label("邮政编码", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.EditorFor(model => model.zipcode, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        @Html.Label("手机号码", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.EditorFor(model => model.tel, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </form>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+
+                        <h3>所有地址</h3>
+                        <div class="order_table table-responsive" style="overflow:hidden;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>详细地址</th>
+                                        <th>收货人</th>
+                                        <th>联系电话</th>
+                                        <th>编辑</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adddressBody">
+                                    @if (ViewBag.addressInfo != null)
+                                    {
+                                        foreach (var item in ViewBag.addressInfo)
+                                        {
+                                            <tr name="@item.ID">
+                                                <td> @item.address</td>
+                                                <td> @item.consignee</td>
+                                                <td> @item.tel</td>
+                                                <td class="product_remove">
+                                                    <a href="#" onclick="editAjax( @item.ID )" class="fa fa-edit"></a>
+                                                    @Html.ActionLink(" ", "Delete", new { deleteId = @item.ID }, new { onclick = "return confirm('确定要删除吗？')", @class = "fa fa-trash-o" })
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
+
+
+                        <div class="order_button">
+
+                            <button type="submit">更新地址</button>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/assets/js/Arddress.js"></script>
+<script>
+    ////页面关闭之前
+    //window.onbeforeunload = function () {
+    //    $.post("/Address/change", { username: null });
+    //};
+
+    $(function () {
+        var id = $("#ID").val();
+        var ci = $("input[id=city]").val();
+        var di = $("input[id=district]").val();
+        if(id!=null)
+        {
+            
+            $('select[name=province]').trigger("change");//自动触发省份改变的事件
+            $("select[name=city]").find("option[value='" +ci+ "']").attr("selected", true);
+            $('select[name=city]').trigger("change");//自动触发城市改变的事件
+            $("select[name=district]").find("option[value='" + di+ "']").attr("selected", true);
+        }
+
+    })
+ 
+    function editAjax(ID) {
+    
+        $.post("/Address/Edit", { "ID": ID }, function (data) {
+          
+            $("#ID").val(data[0].ID);
+            $("#userId").val(data[0].userId);
+            $("#consignee").val(data[0].consignee);
+            $("#email").val(data[0].email);
+            $("#address").val(data[0].address);
+            $("#RealName").val(data[0].RealName);
+            $("#zipcode").val(data[0].zipcode);
+            $("#tel").val(data[0].tel);
+            $("#province").find("option[value='" + data[0].province + "']").attr("selected", true);
+            $('select[name=province]').trigger("change");//自动触发省份改变的事件
+            $("select[name=city]").find("option[value='" + data[0].city + "']").attr("selected", true);
+            $('select[name=city]').trigger("change");//自动触发城市改变的事件
+            $("select[name=district]").find("option[value='" + data[0].district + "']").attr("selected", true);
+
+        })
+
+    }
+
+    ///////////验证地址/////////
+    $("#address").blur(function () {
+        var ass = $(this).val();
+        var pr = $("select[name=province]").val();
+        var ct = $("select[name=city]").val();
+        var dt = $("select[name=district]").val();
+        if (!(ass.indexOf(pr) >= 0 && ass.indexOf(ct) >= 0 && ass.indexOf(dt) >= 0 && ass != "")) {
+            $(this).val("*输入地址错误!(必填)");
+            $(this).addClass("starError");
+            $(this).focus();
+            Flag = false;
+        }
+        else {
+            $(this).removeClass("starError");
+            Flag = true;
+
+        }
+
+    })
+
+
+    //验证关键字只能是汉字
+    var regc = /^[\u0391-\uFFE5]+$/;
+    $("#consignee").blur(function () {
+        var ss = $(this).val();
+        if (!regc.test($(this).val()) || ss == "") {
+            $(this).val("*名称不规范!(必填)");
+            $(this).addClass("starError");
+            $(this).focus();
+      
+        }
+        else {
+            $(this).removeClass("starError");
+            
+        }
+    })
+
+    ///////////验证邮政编码/////////
+    var regzipcode =/^[1-9][0-9]{5}$/;
+    $("#zipcode").blur(function () {
+        var ass = $(this).val();
+        if (ass == "" || !regzipcode.test(ass)) {
+            $(this).val("*请输入正确的邮政编码!(必填)");
+            $(this).css('color', 'red');
+            $(this).focus();
+
+        }
+        else {
+            $(this).css('color', '#000000');
+
+        }
+    })
+
+    ///////////验证邮箱/////////
+    var regemail = /^[A-Za-z0-9\u4e00-\u9fa5]+@@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    $("#email").blur(function () {
+        var ss = $(this).val();
+        if (!regemail.test($(this).val()) || ss == "") {
+            $(this).val("*邮箱不规范!(必填)");
+            $(this).css('color', 'red');
+            $(this).focus();
+
+        }
+        else {
+            $(this).css('color', '#000000');
+
+        }
+    })
+
+    ///////////验证电话/////////
+    var reg = /^1(3|4|5|6|7|8|9)\d{9}$/;
+    $("#tel").blur(function () {
+        var ass = $(this).val();
+        if (ass == "" || !reg.test(ass)) {
+            $(this).val("*请输入正确的电话号码!(必填)");
+            $(this).css('color', 'red');
+            $(this).focus();
+
+        }
+        else {
+            $(this).css('color', '#000000');
+
+        }
+    })
+
+</script>
+

@@ -1,0 +1,259 @@
+﻿@model SHoppMVC.Models.OrderInfo
+
+@{
+    Layout = null;
+    ViewBag.Title = "订单详情";
+}
+<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+<link rel="stylesheet" href="https://www.jq22.com/jquery/font-awesome.4.7.0.css">
+@* 按钮的样式 *@
+<link href="~/Areas/Admin/content/css/button/component.css" rel="stylesheet" />
+<style>
+    .tdwidth {
+        width: 140px;
+    }
+
+    tr {
+        height: 50px;
+    }
+</style>
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <br /><br /><br />
+                <h3 style="border-bottom:2px solid #33b35A;padding-bottom:10px;">订单详情</h3>
+
+                <table class="table" style="color:black;font-size:20px;margin-top:6%;">
+                    <tr style="background-color:#f9f9f9;">
+                        <td class="tdwidth">@Html.DisplayName("订单编号:")</td>
+                        <td style="width:190px;"> @Html.DisplayFor(model => model.orderSn)</td>
+                        <td class="tdwidth">
+                            @Html.DisplayName("商品编码:")
+                        </td>
+                        <td style="width:190px;">  @Html.DisplayFor(model => model.goodsSn)</td>
+
+                        <td class="tdwidth">@Html.DisplayName("购买昵称:")</td>
+                        <td style="width:170px;">@Html.DisplayFor(model => model.UserInfo.LoginName)</td>
+
+
+                    </tr>
+                    <tr>
+
+                        <td class="tdwidth">
+                            @Html.DisplayName("订单状态:")
+                        </td>
+                        <td>
+                            @if (Model.orderStatus == 0)
+                            {
+                                <p>预订</p>
+                            }
+                            @if (Model.orderStatus == 1)
+                            {
+                                <p>已购买</p>
+                            }
+                            @if (Model.orderStatus == 2)
+                            {
+                                <p>退货</p>
+                            }
+                        </td>
+
+                        <td class="tdwidth">
+                            @Html.DisplayName("发货编号:")
+                        </td>
+                        <td>
+
+                            @if (Model.deliverySn == null)
+                            {
+                                <p>无</p>
+
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(model => model.deliverySn)
+                            }
+
+                        </td>
+                        <td class="tdwidth">
+                            @Html.DisplayName("联系电话:")
+                        </td>
+                        <td>  @Html.DisplayFor(model => model.tel)</td>
+
+
+
+                    </tr>
+                    <tr>
+
+                        <td class="tdwidth">@Html.DisplayName("购买数量:") </td>
+                        <td style="width:170px;">@Html.DisplayFor(model => model.buyNumber)</td>
+
+
+                        <td class="tdwidth">
+                            @Html.DisplayName("支付类型:")
+                        </td>
+                        <td>
+                            @if (Model.payId == 1)
+                            {
+                                <p>微信</p>
+                            }
+                            @if (Model.payId == 2)
+                            {
+                                <p>支付宝</p>
+                            }
+                            @if (Model.payId == 3)
+                            {
+                                <p>网银</p>
+                            }
+                            @if (Model.payId == 4)
+                            {
+                                <p>银行卡</p>
+                            }
+                        </td>
+
+
+                        <td class="tdwidth">
+                            @Html.DisplayName("发货时间:")
+                        </td>
+                        <td>
+                            @if (Model.shippingTime == null)
+                            {
+                                <p>无</p>
+
+                            }
+                            else
+                            { @Html.DisplayFor(model => model.shippingTime) }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdwidth">@Html.DisplayName("支付状态:")</td>
+                        <td style="width:170px;">
+                            @if (Model.payState == 0)
+                            {
+                                <p>未支付</p>
+                            }
+                            @if (Model.payState == 1)
+                            {
+                                <p>支付</p>
+                            }
+                        </td>
+                        <td class="tdwidth">
+                            @Html.DisplayName("配送方式:")
+                        </td>
+                        <td style="width:190px;">  @Html.DisplayFor(model => model.shippingName)</td>
+                        <td class="tdwidth">
+                            @Html.DisplayName("邮政编码:")
+                        </td>
+                        <td style="width:190px;">  @Html.DisplayFor(model => model.zipcode)</td>
+
+
+
+
+                    </tr>
+                    <tr>
+
+
+                        <td class="tdwidth">
+                            @Html.DisplayName("收款金额:")
+                        </td>
+                        <td style="width:190px;"> @Html.DisplayFor(model => model.orderAmount)</td>
+
+
+                        <td class="tdwidth">
+                            @Html.DisplayName("邮费:")
+                        </td>
+                        <td style="width:190px;">  @Html.DisplayFor(model => model.shippingFee)</td>
+
+                        <td class="tdwidth">
+                            @Html.DisplayName("邮箱:")
+                        </td>
+                        <td style="width:190px;">  @Html.DisplayFor(model => model.email)</td>
+
+
+                    </tr>
+                    <tr>
+
+                        <td class="tdwidth">@Html.DisplayName("移动电话:")</td>
+                        <td style="width:170px;">@Html.DisplayFor(model => model.mobile)</td>
+                        <td class="tdwidth">@Html.DisplayName("商品金额:") </td>
+                        <td style="width:170px;">@Html.DisplayFor(model => model.goodsAmount)</td>
+
+                        <td class="tdwidth">@Html.DisplayName("详细地址:")</td>
+                        <td>@Html.DisplayFor(model => model.address)</td>
+
+                    </tr>
+                    <tr>
+                        <td class="tdwidth">@Html.DisplayName("订单生成时间:")</td>
+                        <td style="width:170px;">@Html.DisplayFor(model => model.addTime)  </td>
+
+                        <td class="tdwidth">
+                            @Html.DisplayName("支付时间:")
+                        </td>
+                        <td>  @Html.DisplayFor(model => model.payTime)</td>
+
+                        <td class="tdwidth">
+                            @Html.DisplayName("订单确认时间:")
+                        </td>
+                        <td style="width:190px;">
+                            @if (Model.confirmTime == null)
+                            {
+                                <p>无</p>
+
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(model => model.confirmTime)
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td class="tdwidth">
+                            @Html.DisplayName("物流状态:")
+                        </td>
+                        <td>
+                            @if (Model.shippingStatus == 0)
+                            {
+                                <p>暂无信息</p>
+
+                            }
+                            @if (Model.shippingStatus == 1)
+                            {
+                                <p>已发货</p>
+
+                            }
+                            @if (Model.shippingStatus == 2)
+                            {
+                                <p>已收货</p>
+
+                            }
+                        </td>
+                        <td class="tdwidth">
+                            @Html.DisplayName("买家留言:")
+                        </td>
+                        <td style="width:190px;" colspan="3">@Html.DisplayFor(model => model.payNote)</td>
+
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+<div style="margin-left:17%;text-decoration:none;">
+    <div class="progress-button">
+        <button type="submit" id="search">@Html.ActionLink("返回", "Index")</button>
+    </div>
+    @*@Html.ActionLink(" ", "Index", null, new { @class = "fa fa-arrow-left", @style = "font-size:40px;" })*@
+</div>
+
+
+
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Areas/Admin/content/js/front.js"></script>

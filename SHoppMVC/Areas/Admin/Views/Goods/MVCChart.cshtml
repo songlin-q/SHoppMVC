@@ -1,0 +1,31 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.nav = "库存明细";
+    ViewBag.Title = "MVCChart";
+}
+<style>
+    #table {
+    width:800px;
+    position:relative;
+    left:-40px;
+    }
+</style>
+<div id="table">
+    <table style="width: 100%">
+    <tr>
+        <td>
+            <img src="@Url.Action("R_Goods")" alt="主张图" />
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <img src="@Url.Action("R_Goods_Price")" alt="主张图" />
+        </td>
+
+    </tr>
+    </table>
+
+</div>
+

@@ -1,0 +1,214 @@
+﻿@model SHoppMVC.Models.massage
+
+@{
+    ViewBag.Title = "博客";
+    ViewBag.count = ViewBag.cartnum;
+    ViewBag.Loginname = ViewBag.login;
+}
+<style>
+    .box {
+         
+    }
+</style>
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <div class="section_title">
+                        <p>好利来购物网站</p>
+                        <h2>博客信息</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="blog_details">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-md-12">
+
+                <div class="blog_wrapper blog_wrapper_details">
+                    <article class="single_blog">
+                        <figure>
+                            <div class="post_header">
+                                <h3 class="post_title">@ViewBag.subject </h3>
+                                <div class="blog_meta">
+                                    <p>发布者 : <a href="#"> @ViewBag.Author </a> / 发布日期 : <a href="#">@ViewBag.publishDate </a> / 评论数 : <a href="#">@ViewBag.commentNo </a></p>
+                                </div>
+                            </div>
+                            <div class="blog_thumb">
+                                <a href="#"><img src="@ViewBag.picture" alt=""></a>
+                            </div>
+                            <figcaption class="blog_content">
+                                <div class="post_content">
+                                    <p>
+                                        @ViewBag.content
+                                    </p>
+                               </div>
+                                <div class="entry_content">
+                                    <div class="post_meta">
+                                        <span>标签: </span>
+                                        <span><a href="#">, 时尚</a></span>
+                                        <span><a href="#">, 绿色</a></span>
+                                        <span><a href="#">, 清新</a></span>
+                                    </div>
+
+                                    <div class="social_sharing">
+                                        <p>分享这篇文章:</p>
+                                        <ul>
+                                            <li><a href="#" title="facebook"><i class="fa fa-facebook"></i></a></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </article>
+                    <div class="related_posts">
+
+                    </div>
+
+                    <div class="comments_box">
+                        <h3>共 @ViewBag.commentNo 条评论</h3>
+
+                        @for (int i = 0; i < ViewBag.Data.Count; i++)
+                        {
+                            <div class="comment_list">
+                                <div class="comment_thumb">
+                                    <img src="~/assets/img/blog/comment3.png.jpg" alt="">
+                                </div>
+                                <div class="comment_content">
+                                    <div class="comment_meta">
+                                        <h5>
+                                            <a href="#">
+                                                @ViewBag.Data[i].userName
+                                            </a>
+                                        </h5>
+                                        <span>
+                                            @ViewBag.Data[i].messageTime
+                                        </span>
+                                    </div>
+                                    <p>
+                                        @ViewBag.Data[i].messageContent
+                                    </p>
+                                    <div class="comment_reply">
+                                      
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+           
+            </div>
+            <div class="col-lg-3 col-md-12">
+                <div class="blog_sidebar_widget">
+                    <div class="widget_list widget_search">
+                     
+
+                        <div class="widget_list comments">
+
+                            <div class="widget_list widget_post">
+                                <div class="widget_title">
+                                    <h3>最近的帖子</h3>
+                                </div>
+                                <div class="post_wrapper">
+                                    <div class="post_thumb">
+                                        <a href="blog-details.html"><img src="~/assets/img/blog/blogs1.jpg" alt=""></a>
+                                    </div>
+                                    <div class="post_info">
+                                        <h4><a href='javascript:window.open("Index?articleInfo=000002" )'>博客图片帖子</a></h4>
+                                        <span>March 16, 2018 </span>
+                                    </div>
+                                </div>
+                                <div class="post_wrapper">
+                                    <div class="post_thumb">
+                                        <a href="blog-details.html"><img src="~/assets/img/blog/blogs2.jpg" alt=""></a>
+                                    </div>
+                                    <div class="post_info">
+                                        <h4><a href='javascript:window.open("Index?articleInfo=000003" )'>带图库的帖子</a></h4>
+                                        <span>March 16, 2018 </span>
+                                    </div>
+                                </div>
+                                <div class="post_wrapper">
+                                    <div class="post_thumb">
+                                        <a href="blog-details.html"><img src="~/assets/img/blog/blogs3.jpg" alt=""></a>
+                                    </div>
+                                    <div class="post_info">
+                                        <h4><a href='javascript:window.open("Index?articleInfo=000001" )'>带音频的帖子</a></h4>
+                                        <span>March 16, 2018 </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget_list widget_categories">
+                                <div class="widget_title">
+                                    <h3>类别</h3>
+                                </div>
+                                <ul>
+                                    <li><a href="#">音频</a></li>
+                                    <li><a href="#">单位</a></li>
+                                    <li><a href="#">植物</a></li>
+                                    <li><a href="#">美食</a></li>
+                                    <li><a href="#">画廊</a></li>
+                                    <li><a href="#">图像</a></li>
+                                    <li><a href="#">其他</a></li>
+                                    <li><a href="#">旅行</a></li>
+                                </ul>
+                            </div>
+                            <div class="widget_list widget_tag">
+                                <div class="widget_title">
+                                    <h3>标签产品</h3>
+                                </div>
+                                <div class="tag_widget">
+                                    <ul>
+                                        <li><a href="#">亚洲的</a></li>
+                                        <li><a href="#">棕色的</a></li>
+                                        <li><a href="#">欧元</a></li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <div class="comments_form widget_list widget_categories">
+                                <h3 class="bg-success" style="color:white;margin:0 auto;padding:0 ;">添加评论 </h3>
+                                @using (Html.BeginForm("Index", "Blog", FormMethod.Post))
+                                {
+                                    <form action="#">
+                                        <div class="row">
+                                            <div class="col-10">
+                                                <label for="review_comment">评论 </label>
+                     
+                                                @Html.TextArea("information", "", new { @class = "form-control box" })
+                                            </div>
+                                            <div class="col-lg-6 col-md-4">
+                                                <label for="author">姓名</label>
+                               
+                                                @Html.TextBox("Name", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <input type="submit" value="发表评论" class="btn-default" />
+
+                                    </form>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+<script>
+    ////页面关闭之前
+    //window.onbeforeunload = function () {
+    //    $.post("/Blog/change", { username: null });
+    //};
+</script>
+

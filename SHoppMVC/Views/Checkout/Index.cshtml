@@ -1,0 +1,152 @@
+﻿@model SHoppMVC.Models.OrderInfo
+@{
+
+    ViewBag.Title = "结账";
+    ViewBag.count = ViewBag.cartnum;
+    ViewBag.Loginname = ViewBag.login;
+}
+<link href="~/assets/css/checkOut.css" rel="stylesheet" />
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <div class="section_title">
+                        <p>好利来购物网站</p>
+                        <h2>结账</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="Checkout_section mt-70">
+    <div class="container">
+
+        <div class="checkout_form">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <form action="#">
+                        <h3 style="background-color:green;">选择收货地址(<a href="../Address/Index">新增收货地址</a>)</h3>
+                        <div class="row text-center">
+                            @if (ViewBag.address != null)
+                            {
+                                foreach (var item in ViewBag.address)
+                                {
+                                    <div class="col-lg-6 col-md-6 addressStyle">
+                                        <div class="Baddress_Flag" id="@item.ID">默认地址</div>
+
+                                        <button type="button" class="btn btn-default Baddress" name="btnAddress" id="@item.ID">
+                                            <p class="Baddress_Name">@item.province @item.city (@item.consignee 收) </p>
+                                            <p class="Baddress_Address">@item.address</p>
+
+                                        </button>
+                                        <a id="Baddress_Edit" style="position: absolute;right :50px;bottom:2px;color green;" href="#" onclick="backAddress(@item.ID)">修改</a>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-6 col-md-6">
+
+                    <h3 style="background-color:green;">你的订单</h3>
+                    <div class="order_table table-responsive" style="overflow:hidden;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>产品</th>
+                                    <th>总计</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    double total = 0;
+                                    double postage = 0;
+                                    double totalAndPos = 0;
+
+                                }
+                                @if (ViewBag.List != null)
+                                {
+
+                                    foreach (var item in ViewBag.List)
+                                    {
+                                        total += Convert.ToDouble(@item.totalPrice);
+                                        postage += Convert.ToDouble(@item.postage);
+                                        @* 计算总价和运费的总和 *@
+                                totalAndPos = total + postage;
+                                <tr>
+                                    <td> @item.goodsName <strong> × @item.buyNumber</strong></td>
+                                    <td> $@item.totalPrice</td>
+                                </tr>
+                                    }
+                                }
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>购物车小计</th>
+                                    <td>$<span class="Price">@total</span></td>
+                                </tr>
+                                <tr>
+                                    <th>运费</th>
+                                    <td><strong>$<span class="shipFee">@postage</span></strong></td>
+                                </tr>
+                                <tr class="cart_button">
+                                    <th>订单合计</th>
+                                    <td><strong>$<span class="total_Price">@totalAndPos</span></strong></td>
+
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    @using (Html.BeginForm())
+                    {
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <div class="row">
+                                    @Html.Label("订单备注", htmlAttributes: new { @class = "control-label col-md-3" })
+                                    @Html.TextBoxFor(x => x.payNote, new { @palceholder = "留言....", @class = "col-md-9" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <div class="row">
+                                    @Html.Label("配送方式", htmlAttributes: new { @class = "control-label col-md-3" })
+                                    @Html.DropDownListFor(Model => Model.shippingName, (List<SelectListItem>)ViewData["shippInfo"], htmlAttributes: new { @class = "select_option  col-md-9" })
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout_btn">
+                            @Html.Hidden("addressId")
+                            @Html.Hidden("totalPrice")
+                            <button type="submit" class="btn btn-success">提交订单</button>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/assets/js/checkOut.js"></script>
+<script>
+    /*跳转地址页面，且传入选中的地址表中的id值*/
+    function backAddress(ID) {
+        window.open("/Address/Index?" + ID);
+    }
+
+    ////页面关闭之前
+    //window.onbeforeunload = function () {
+    //    $.post("/Checkout/change", { username: null });
+    //};
+</script>

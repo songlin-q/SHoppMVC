@@ -1,0 +1,223 @@
+﻿
+@{
+
+    ViewBag.Title = "登录";
+    ViewBag.count = ViewBag.cartnum;
+    ViewBag.Loginname = ViewBag.login;
+}
+
+<style>
+    #denglu {
+        border-radius: 10px;
+        background-color: #40a944;
+        color: white;
+    }
+
+    #zhuce {
+        border-radius: 10px;
+        background-color: #40a944;
+        color: white;
+    }
+                        .text {
+    color:red;
+    }
+</style>
+
+@using (Html.BeginForm("Index", "Login", FormMethod.Post))
+{
+    <div class="breadcrumbs_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                        <div class="section_title">
+                            <p>好利来购物网站</p>
+                            <h2>登陆/注册</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="customer_login">
+        <div class="container">
+            <div class="row">
+     
+                <div class="col-lg-6 col-md-6">
+                    <div class="account_form">
+                        <h2>登录</h2>
+                        <form action="#">
+                            <p>
+                                <label>用户名 <span>*</span></label>
+                                <table>
+                                    <tr>
+                                        <td style="width:600px;">
+                                            @Html.TextBox("loginName")
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                            <p>
+                                <label>密码 <span>*</span></label>
+                                <table>
+                                    <tr>
+                                        <td style="width:600px;">
+                                            @Html.Password("loginPwd")
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                            <div class="login_submit">
+                                <a href="../IdentifyingCode/IdentifyingCode">忘记密码?</a>
+                                <input name="action1" type="submit" id="denglu" value="登录" />
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6">
+                    <div class="account_form register">
+                        <h2>注册</h2>
+                        <form action="#">
+                            <p>
+                                <label>用户名 <span>*</span></label>
+                                <table>
+                                    <tr>
+                                        <td style="width:600px;">
+                                            @Html.TextBox("newName")
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                            <p>
+                                <label>密码 <span>*</span></label>
+                                <table>
+                                    <tr>
+                                        <td style="width:600px;">
+                                            @Html.TextBox("newPwd")
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                            <p>
+                                <label>电话号码 <span>*</span></label>
+                                <table>
+                                    <tr>
+                                        <td style="width:600px;">
+                                            @Html.TextBox("Tel")
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                            <p>
+                                <label>地址<span>*</span></label>
+                                <table>
+                                    <tr>
+                                        <td style="width:600px;">
+                                            @Html.TextBox("Address")
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                            <div class="login_submit">
+                                <input id="zhuce" type="submit" name="action1" value="注册" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+<script>
+    //验证用户名称不能为空
+    var newName = document.getElementById("newName");
+    newName.onblur = function () {
+        if (newName.value == "") {
+            newName.value = "*商品名称不能为空";
+            newName.className = "text";
+            newName.focus();
+            return false;
+        }
+        else {
+            //验证用户名称只能是汉字或者字母
+            var reg = /^[\u4e00-\u9fa5]|[a-zA-Z]+$/;
+            if (!reg.test(newName.value)) {
+                newName.value = "*请输入汉字或者字母";
+                newName.className = "text";
+                newName.focus();
+                return false;
+            }
+        }
+        newName.className = "";
+    }
+
+    //验证密码不能为空
+    var newPwd = document.getElementById("newPwd");
+    newPwd.onblur = function () {
+        if (newPwd.value == "") {
+            newPwd.value = "*密码不能为空";
+            newPwd.className = "text";
+            newPwd.focus();
+            return false;
+        }
+        else {
+            //验证用户名称只能是汉字或者字母
+            var reg = /^(\w){6,20}$/;
+            if (!reg.test(newPwd.value)) {
+                newPwd.value = "*只能输入6-20个字母、数字、下划线 ";
+                newPwd.className = "text";
+                newPwd.focus();
+                return false;
+            }
+        }
+        newPwd.className = "";
+    }
+
+    //验证电话不能为空
+    var Tel = document.getElementById("Tel");
+    Tel.onblur = function () {
+        if (Tel.value == "") {
+            Tel.value = "*电话号码不能为空";
+            Tel.className = "text";
+            Tel.focus();
+            return false;
+        }
+        else {
+            //验证用户名称只能是汉字或者字母
+            var reg = /^1[3456789]\d{9}$/;
+            if (!reg.test(Tel.value)) {
+                Tel.value = "*只能输入正确的电话号码";
+                Tel.className = "text";
+                Tel.focus();
+                return false;
+            }
+        }
+        Tel.className = "";
+    }
+    //验证地址不能为空
+    var Address = document.getElementById("Address");
+    Address.onblur = function () {
+        if (Address.value == "") {
+            Address.value = "*地址不能为空";
+            Address.className = "text";
+            Address.focus();
+            return false;
+        }
+        else {
+            //验证商品名称只能是汉字
+            var reg = /[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g;
+            if (!reg.test(Address.value)) {
+                Address.value = "*只能输入数字/英文/中文";
+                Address.className = "text";
+                Address.focus();
+                return false;
+            }
+        }
+        goodtypename.className = "";
+    }
+
+</script>

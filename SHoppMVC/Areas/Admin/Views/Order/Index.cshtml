@@ -1,0 +1,513 @@
+﻿
+@model PagedList.IPagedList<SHoppMVC.Models.OrderInfo>
+@using PagedList.Mvc;
+@{
+    Layout = null;
+    ViewBag.Title = "订单管理";
+    ViewBag.nav = "订单管理";
+}
+
+<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+<link rel="stylesheet" href="https://www.jq22.com/jquery/font-awesome.4.7.0.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<link href="~/Scripts/layer-v3.1.1/layer/mobile/need/layer.css"  rel="stylesheet" />
+@* 按钮的样式 *@
+<link href="~/Areas/Admin/content/css/button/component.css" rel="stylesheet" />
+<link href="~/Areas/Admin/content/css/button/hoverStyle.css" rel="stylesheet" />
+<style>
+    /*弹出层按钮的背景颜色*/
+    body .layui-layer-molv .layui-layer-btn a {
+        background-color: #41A945;
+        color: white;
+    }
+
+    #addtable .layui-input {
+        width: 245px;
+        height: 30px;
+    }
+
+    #addtable > tbody > tr {
+        margin-bottom: 20px;
+       
+    }
+    #addtable select {
+    height:27px;
+     font-size:14px;
+    }
+    #addtable {
+        position: relative;
+        left: 50px;
+        height: 163px;
+    }
+    #addtable .starError{
+        font-size:15px;
+        color:red;
+   
+    }
+
+</style>
+
+
+
+<!-- 你必须先引入jQuery1.8或以上版本 -->
+
+<div>
+    <div>
+        <a href="javascript:sliter(2)" class="btna btnaHover">所有</a>
+        <a href="javascript:sliter(0)" class="btna">未支付</a>
+        <a href="javascript:sliter(1)" class="btna">已支付</a>
+
+       
+
+        <hr />
+    </div>
+    @using (Html.BeginForm())
+    {
+        <div>
+            订单号：
+            @Html.TextBox("orderSn", null, new { @placeholder = "请输订单单号" })
+            时间：
+            @Html.TextBox("Startdate", null, new { @class = "form_datetime", @placeholder = "请输入开始时间" })
+            <span>-</span>@Html.TextBox("Enddate", null, new { @class = "form_datetime", @placeholder = "请输入结束时间" })
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <div class="progress-button">
+                <button type="submit" id="search">搜 索</button>
+            </div>
+            <div class="progress-button">
+                <button type="submit" id="search">@Html.ActionLink("导出", "excelout")</button>
+            </div>
+           
+
+        </div>
+
+        @Html.Hidden("IsPay")
+        <table class="table">
+            <tr>
+                <th>
+                    订单编号
+                </th>
+                <th>
+                    用户名
+                </th>
+                <th>
+                    商品编码
+                </th>
+                <th>
+                    配送状态
+                </th>
+                <th>
+                    收货人号码
+                </th>
+                <th>
+                    收货人地址
+                </th>
+                <th>
+                    支付状态
+                </th>
+                <th>
+                    支付类型
+                </th>
+                <th>
+                    付款金额
+                </th>
+                <th>
+                    订单生成时间
+                </th>
+                <th>
+                    付款备注
+                </th>
+
+                <th>操作</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.orderSn)
+
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserInfo.LoginName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.goodsSn)
+                    </td>
+                    <td>
+                        @if (item.shippingStatus == 0)
+                        {
+                            <p>暂无物流</p>
+                        }
+                        else if (item.shippingStatus == 1)
+                        {
+                            <p>配送中</p>
+                        }
+                        else
+                        {
+                            <p>配送完成</p>
+                        }
+
+                    </td>
+
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tel)
+
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.address)
+                    </td>
+
+
+
+                    <td>
+                        @if (item.payState == 0)
+                    {
+                            <p>未支付</p>
+                        }
+                        else
+                        {
+                            <p>已支付</p>
+                        }
+                    </td>
+                    <td>
+                        @if (item.payId == 1)
+                        {
+                            <p>微信</p>
+                        }
+                        else if (item.payId == 2)
+                        {
+                            <p>支付宝</p>
+                        }
+                        else if (item.payId == 3)
+                        {
+                            <p>网银</p>
+                        }
+                        else if (item.payId == 4)
+                        {
+                            <p>银行卡</p>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.orderAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.addTime)
+
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.payNote)
+                    </td>
+
+                    <td style="text-align:center;">
+                  
+                        @if (item.shippingStatus == 0)
+                        {
+
+                            <a href="#" onclick="editAjax( @item.ID )" class="fa fa-pencil-square-o" style="font-size:18px;"></a>
+
+                        }
+                        @if (item.payState == 0)
+                        {
+                            @Html.ActionLink(" ", "IsPaydelete", null, new { id = item.ID }, new { onclick = "return confirm('确定要删除吗？')", @class = "fa fa-times", @style = "font-size:18px;" })
+
+                        }
+                        @Html.ActionLink(" ", "Look", null, new { ID = item.ID }, new { @class = "fa fa-file-text-o", @style = "font-size:16px;" })
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+
+    共 @Model.PageCount 页，当前 @Model.PageNumber 页
+    @Html.PagedListPager(Model, pagenum => Url.Action("Index", new { pagenum }))
+</div>
+
+<!-- 弹出框添加 -->
+
+<div id="add_Brand" style="display:none;padding:20px;">
+    <form autocomplete="off" id="sub_form" method="post" class="layui-form" onsubmit="">
+        <table id="addtable" class="layui-table" style="font-size:10px;">
+            <tr>
+                <td><label class="layui-form-label">收货人:</label></td>
+                <td>@Html.TextBox("consignee", null, new { @class = "layui-input", @style = "font-size:14px;" })</td>
+                <td colspan="3">@Html.TextBox("ID", null, new { @style = "display:none;" })</td>
+            </tr>
+
+            <tr>
+                <td><label class="layui-form-label">电话号码:</label></td>
+                <td colspan="4">@Html.TextBox("tel", null, new { @class = "layui-input", @style = "font-size:14px;" })</td>
+
+            </tr>
+            <tr>
+                <td>
+                    <label class="layui-form-label">省份:</label>
+                </td>
+                <td >
+                    @Html.DropDownList("province", (List<SelectListItem>)ViewData["provinceInfo"], "所在省")
+                    <label class="layui-form-label">市:</label>
+                    <select name="city" class="selectType">
+                        <option value="0">所在市</option>
+                    </select>
+                    <label class="layui-form-label">区:</label>
+                    <select class="selectType" name="district">
+                        <option value="0">所在区</option>
+                    </select>
+                 </td>
+          
+
+
+
+
+            </tr>
+
+            <tr>
+                <td><label class="layui-form-label">收货地址:@*<span class="starError">*</span>*@</label></td>
+                <td colspan="4">@Html.TextBox("address", null, new { @class = "layui-input addressstyle", @style = "font-size:14px;" })</td>
+
+
+            </tr>
+        </table>
+    </form>
+</div>
+
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Areas/Admin/content/js/front.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/layer-v3.1.1/layer/layer.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+<script>
+
+
+    var city = [
+    ["北京市", "天津市", "上海市", "重庆市"],
+    ["广州市", "深圳市", "珠海市", "东莞市"],
+   ["南京市", "苏州市", "南通市", "常州市"],
+  ["福州市", "厦门市", "莆田市", "泉州市"]
+    ];
+    var district = [
+       [
+           ["东城区", "西城区", "宣武区"], ["和平区", "红桥区", "塘沽区"], ["杨浦区", "徐汇区"], ["万州区", "涪陵区"]
+       ],
+       [
+          ["天河区", "海珠区", "白云区", "番禺区"], ["南山区", "宝安区", "福田区"], ["香洲区", "斗门区", "金湾区"], ["东城区", "莞城区", "万江区"]
+       ],
+       [
+            ['玄武区', '白下区', '秦淮区', '建邺区'], ['沧浪区', '平江区', '金阊区', '虎丘区'], ['崇川区', '港闸区', '海安县', '如东县'], ['天宁区', '钟楼区', '新北区']
+       ],
+        [
+           ['鼓楼区', '台江区', '仓山区', '马尾区'], ['思明区', '海沧区', '湖里区', '集美区'], ['城厢区', '涵江区', '荔城区', '秀屿区'], ['鲤城区', '丰泽区', '洛江区', '泉港区']
+        ]
+    ];
+    //绑定地区开始
+    function Bindaddress()
+    {
+
+        $('#addtable>tbody>tr>td>select[name=province]').change(function () {
+
+            //获得省份下拉框的对象
+            var sltProvince = $('select[id=province]');
+            //获得城市下拉框的对象
+            var sltCity = $('select[name=city]');
+            //获得市区下拉框的对象
+            var sltDistrict = $('select[name=district]');
+
+            //得到对应省份的城市数组
+            var pselectedIndex = sltProvince.children('option:selected').index();
+
+            var provinceCity = city[pselectedIndex - 1];
+
+            //清空城市下拉框，仅留提示选项
+            $(sltCity).children().not(":first").remove();
+            $(sltDistrict).children().not(":first").remove();
+
+            //将城市数组中的值填充到城市下拉框中
+            for (var i = 0; i < provinceCity.length; i++) {
+
+                var option = $("<option>").text(provinceCity[i]).val(provinceCity[i])
+                sltCity.append(option);
+            }
+
+        })
+
+        $('select[name=city]').change(function () {
+            //获得省份下拉框的对象
+            var sltProvince = $('select[id=province]');
+            //获得城市下拉框的对象
+            var sltCity = $('select[name=city]');
+            //获得市区下拉框的对象
+            var sltDistrict = $('select[name=district]');
+            //得到对应城市的市区数组
+            var pselectedIndex = sltProvince.children('option:selected').index();
+            var cselectedIndex = $(this).children('option:selected').index();
+            var cityDistrict = district[pselectedIndex - 1][cselectedIndex - 1];
+            //清空城市下拉框，仅留提示选项
+            $(sltDistrict).children().not(":first").remove();
+            if (pselectedIndex!=0) {
+                //将城市数组中的值填充到城市下拉框中
+                for (var i = 0; i < cityDistrict.length; i++) {
+                    var option = $("<option >").text(cityDistrict[i]).val(cityDistrict[i])
+                    sltDistrict.append(option);
+                }
+            }
+           
+
+        })
+
+    }
+    //地区结束
+
+    //Ajax序列化表单及请求操作结果
+    function check() {
+
+        $.post('/Order/EditReturnAddress', $("#sub_form").serialize(), function (data) {
+
+            location.href = "../Order/Index";
+            layer.close(layer.index);
+        });
+        return false;
+    }
+
+    //Ajax返回ID值，请求一个对象
+    function editAjax(ID) {
+      
+        var Flag = true;//标识验证是否完全正确
+        $.post("/Order/EditAddress", { "ID": ID }, function (data) {
+     
+            $("#ID").val(data.ID);
+            $("#consignee").val(data.consignee);
+            $("#tel").val(data.tel);
+            $("#address").val(data.address);
+            $("#province").find("option[value='" + data.province + "']").attr("selected", true);
+            Bindaddress();
+            $('select[name=province]').trigger("change");//自动触发省份改变的事件
+            $("select[name=city]").find("option[value='" + data.city + "']").attr("selected", true);
+            $('select[name=city]').trigger("change");//自动触发城市改变的事件
+            $("select[name=district]").find("option[value='" + data.district + "']").attr("selected", true);
+            ///////////验证地址/////////
+            $("#address").blur(function () {
+                var ass = $(this).val();
+                var pr = $("select[name=province]").val();
+                var ct = $("select[name=city]").val();
+                var dt = $("select[name=district]").val();
+                if (!(ass.indexOf(pr) >= 0 && ass.indexOf(ct) >= 0 && ass.indexOf(dt) >= 0 && ass != "")) {
+                    $(this).val("*输入地址错误!(必填)");
+                    $(this).addClass("starError");
+                    $(this).focus();
+                    Flag = false;
+                }
+                else {
+                    $(this).removeClass("starError");
+                    Flag = true;
+
+                }
+
+            })
+
+
+            //验证关键字只能是汉字
+            var regc = /^[\u0391-\uFFE5]+$/;
+            $("#consignee").blur(function () {
+                var ss = $(this).val();
+                if (!regc.test($(this).val()) || ss == "") {
+                    $(this).val("*名称不规范!(必填)");
+                    $(this).addClass("starError");
+                    $(this).focus();
+                    Flag = false;
+                }
+                else {
+                    $(this).removeClass("starError");
+                    Flag = true;
+                }
+            })
+
+
+            ///////////验证电话/////////
+            var reg = /^1(3|4|5|6|7|8|9)\d{9}$/;
+            $("#tel").blur(function () {
+                var ass = $(this).val();
+                if (ass == ""  || !reg.test(ass)) {
+                    $(this).val("*请输入正确的电话号码!(必填)");
+                    $(this).addClass("starError");
+                    $(this).focus();
+                    Flag = false;
+                }
+                else
+                {
+                    $(this).removeClass("starError");
+                    Flag = true;
+                }
+            })
+
+
+
+            layer.open({
+                title: ['编辑', 'background-color:#41A945;color:white;'],
+                type: 1,
+                skin: 'layui-layer-molv',
+                area: ['450px', '320px'],
+                shadeClose: true, //点击遮罩关闭
+                content: $('#add_Brand'),
+                anim: 1,
+                isOutAnim:true,
+                btn: ['确定'],
+
+                yes: function (index) {
+
+                    if (Flag) {
+                        check();
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+
+                },
+                cancel: function () {//右上角关闭
+                    location.href = '../Order/Index';
+                    layer.close(layer.index);
+                   
+                }
+
+
+            })
+          
+        })
+
+    }
+
+    //支付条件
+    function sliter(typeid) {
+
+        document.getElementById("IsPay").value = typeid;
+        $("#search").trigger("click");
+    }
+
+
+    function showhide() {
+        $(".search").slideToggle("slow");
+    }
+
+    //日期控件
+    $('.form_datetime').datetimepicker({
+        weekStart: 0, //一周从哪一天开始
+        todayBtn: 1, //
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+
+</script>

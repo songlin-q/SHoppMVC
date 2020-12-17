@@ -1,0 +1,223 @@
+﻿@model SHoppMVC.Models.UserInfo
+
+@{
+    ViewBag.Title = "个人中心";
+    ViewBag.count = ViewBag.cartnum;
+    ViewBag.Loginname = ViewBag.login;
+}
+<style>
+    .DropList {
+        width: 358px;
+        height: 40px;
+    }
+                            .text {
+    color:red;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    <div class="breadcrumbs_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                        <h3>个人中心</h3>
+                        <ul>
+                            <li><a href="#">修改个人信息</a></li>
+                            <li><a href="../PersonalCenter/Indexcs">订单详情</a></li>
+                           
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+            <div class="account_form register">
+
+                <form action="#">
+                    <table class="table">
+                        <tr>
+
+                            <td><label>用户名</label></td>
+                            <td>
+                                @Html.EditorFor(model => model.LoginName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.LoginName, "", new { @class = "text-danger" })
+                            </td>
+                     
+                     
+                            <td><label>真实姓名 </label></td>
+                            <td>
+                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                            </td>
+
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>性别</label>
+                            </td>
+                            <td>
+                                @Html.DropDownList("sex",null,new { @class= "DropList" })
+                            </td>
+
+                            <td><label>年龄</label></td>
+                            <td>
+                                @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+                            </td>
+                            </tr>
+                        <tr>
+                            <td><label>电话 </label></td>
+                            <td>
+                                @Html.EditorFor(model => model.Tel, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Tel, "", new { @class = "text-danger" })
+                            </td>
+ 
+                            <td><label>邮箱</label></td>
+                            <td>
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </td>
+                        </tr>
+                        <tr>
+
+                            <td>
+                                <label>生日</label>
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.BirthDay, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.BirthDay, "", new { @class = "text-danger" })
+                            </td>
+       
+                            <td><label>地址</label></td>
+                            <td>
+                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                            </td>
+                            </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="submit"  value="提交" class="btn btn-success" style="background-color:forestgreen;" />
+                            </td>
+                           <td colspan="2">
+                               <input type="button" value="取消" class="btn btn-success" onclick="javascript:history.go(-1);" style="background-color:forestgreen;"  />
+
+                           </td>
+                              
+                        </tr>
+                           
+                    </table>
+                </form>
+            </div>
+        </div>
+
+}
+               
+<script>
+    //验证用户名称格式
+    var newName = document.getElementById("LoginName");
+    newName.onblur = function () {
+
+            //验证用户名称只能是汉字或者字母
+            var reg = /^[\u4e00-\u9fa5]|[a-zA-Z]+$/;
+            if (!reg.test(newName.value)) {
+                newName.value = "*请输入汉字或者字母";
+                newName.className = "text";
+                newName.focus();
+                return false;
+        }
+        newName.className = "";
+    }
+
+    //验证用户名称不能为空
+    var UserName = document.getElementById("UserName");
+    UserName.onblur = function () {
+
+        //验证用户名称只能是汉字或者字母
+        var reg = /^[\u4e00-\u9fa5]|[a-zA-Z]+$/;
+        if (!reg.test(UserName.value)) {
+            UserName.value = "*请输入汉字或者字母";
+            UserName.className = "text";
+            UserName.focus();
+            return false;
+        }
+        UserName.className = "";
+    }
+
+    //验证年龄
+    var Age = document.getElementById("Age");
+    Age.onblur = function () {
+            //验证年龄
+            var ageReg = /^[0-9]+$/;
+            if (!ageReg.test(Age.value)) {
+                Age.value = "*请输入数字";
+                Age.className = "text";
+                Age.focus();
+                return false;
+
+        }
+            Age.className = "";
+    }
+
+
+    //验证电话不能为空
+    var Tel = document.getElementById("Tel");
+    Tel.onblur = function () {
+            //验证电话号码
+            var reg = /^1[3456789]\d{9}$/;
+            if (!reg.test(Tel.value)) {
+                Tel.value = "*只能输入正确的电话号码";
+                Tel.className = "text";
+                Tel.focus();
+                return false;
+            }
+        Tel.className = "";
+    }
+    //验证地址格式
+    var Address = document.getElementById("Address");
+    Address.onblur = function () {
+            //验证地址只能是汉字
+        var reg = /^[\u4e00-\u9fa5]|[a-zA-Z]+$/;
+            if (!reg.test(Address.value)) {
+                Address.value = "*只能输入/中文";
+                Address.className = "text";
+                Address.focus();
+                return false;
+            }
+            Address.className = "";
+    }
+
+    //验证生日格式
+    var BirthDay = document.getElementById("BirthDay");
+    BirthDay.onblur = function () {
+        //验证日期格式
+        var reg = /d{4}-(((0(1|3|5|7|8))|(1(0|2)))(-((0[1-9])|([1-2][0-9])|(3[0-1])))?)|(((0(2|4|6|9))|(11))(-((0[1-9])|([1-2][0-9])|(30)))?)|((02)(-((0[1-9])|([1-2][0-9])))?)/;
+        if (!reg.test(BirthDay.value)) {
+            BirthDay.value = "*请输入正确的日期格式";
+            BirthDay.className = "text";
+            BirthDay.focus();
+            return false;
+        }
+        BirthDay.className = "";
+    }
+
+
+    //验证邮箱格式
+    var Email = document.getElementById("Email");
+    Email.onblur = function () {
+        //验证邮箱格式
+        var reg=/^[A-Za-z0-9\u4e00-\u9fa5]+@@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+        if (!reg.test(Email.value)) {
+            Email.value = "*只能正确的邮箱格式";
+            Email.className = "text";
+            Email.focus();
+            return false;
+        }
+        Email.className = "";
+    }
+
+
+</script>

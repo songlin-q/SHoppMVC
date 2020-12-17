@@ -1,0 +1,325 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "ShopManageupdate";
+    ViewBag.nav = "商品管理>商品管理的新增";
+}
+ <!--图标样式-->
+
+<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+
+<style>
+    .DropList {
+        width: 358px;
+        height: 40px;
+    }
+
+    .y {
+        border: 0px;
+        border-bottom: 1px solid #33b257;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        /*background-color: #F9f9f9;*/
+    }
+
+    .mainh {
+        height: 93%;
+        border: 2px solid lightgray;
+        margin-top: 30px;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        /*background-color: #F9f9f9;*/
+        /*padding:0px;*/
+    }
+
+    .bodyh {
+        /*margin-bottom:50px;*/
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+
+    <div class="container mainh">
+        <div class="row" style="height:50px; background-color:#F9f9f9"></div>
+        <div class="row  bodyh">
+
+            <div class="col-md-3 col-xs-6">
+                商品类型 ：@Html.DropDownList("GoodsType", null, new { @class = "form-control y" })
+            </div>
+            <div class="col-md-3 col-xs-6">
+                商品名称 ：@Html.TextBox("Goodsname", null, new { @placeholder = "请输入商品名称", @class = "form-control y" })
+            </div>
+            <div class="col-md-3 col-xs-6">
+                点赞数 ：@Html.TextBox("clickcount",null,new { @class = "form-control y" })
+            </div>
+
+
+
+
+            <div class="col-md-3 col-xs-6">
+                商品宽度：@Html.TextBox("GoodsWeight",null, new { @class = "form-control y" })
+            </div>
+            <div class="col-md-3 col-xs-6">
+                供应商  ：@Html.DropDownList("supper", null, new { @class = "form-control y"})
+            </div>
+            <div class="col-md-3 col-xs-6">
+                商品数量 ：@Html.TextBox("GoodsNUm", null, new { @class = "form-control y" })
+            </div>
+
+
+
+
+            <div class="col-md-3 col-xs-6">
+                市场价格 ：@Html.TextBox("makeprice", null, new { @class = "form-control y" })元
+            </div>
+            <div class="col-md-3 col-xs-6">
+                促销价格：@Html.TextBox("promoteprice", null, new { @class = "form-control y" })元
+            </div>
+            <div class="col-md-3 col-xs-6">
+
+                添加日期 ：@Html.TextBox("AddDate", null, new { @class = "form-control y", @id="form_datetime"})
+            </div>
+            <div class="col-md-3 col-xs-6">
+                促销日期 ：@Html.TextBox("promoteStartdate", null, new { @class = "form-control y", @id = "form_datetime1" })
+            </div>
+            <div class="col-md-3 col-xs-6">
+                是否上架 ：@Html.DropDownList("isOnSale", null, new { @class = "form-control y" })
+            </div>
+            <div class="col-md-3 col-xs-6">
+                是否包邮：@Html.DropDownList("isPromote", null, new { @class = "form-control y" })
+            </div>
+            <div class="col-md-3 col-xs-6">
+                最后更新日期 ：@Html.TextBox("LastUpdateDate", null, new { @class = "form-control y" ,@id="form_datetime2"})
+            </div>
+            <div class="col-md-3 col-xs-6">
+                邮费 ：@Html.TextBox("Postage", null,new { @class = "form-control y" })元
+            </div>
+
+            <div class="col-md-3 col-xs-6">
+                是否删除 ：@Html.DropDownList("IsDelete", null, new { @class = "form-control y" })
+
+            </div>
+            <div class="col-md-3 col-xs-6">
+                销售数量 ：@Html.TextBox("salesNum", null, new { @class = "form-control y" })
+            </div>
+            <div class="col-md-3 col-xs-6">
+                销售属性 ：@Html.DropDownList("attr", null, new { @class = "form-control y" })
+            </div>
+
+            <div class="col-md-3 col-xs-6">
+
+                是否促销 ：@Html.DropDownList("isShipping", null, new { @class = "form-control y" })
+            </div>
+            <div class="col-md-3 col-xs-6">
+                关键字 ：@Html.TextBox("KeyWord", null, new { @class = "form-control y" })
+
+            </div>
+
+            <div class="col-md-3 col-xs-6"></div>
+            <div class="col-md-3 col-xs-6"></div>
+            <div class="col-md-3 col-xs-6" style="text-align:center">
+                <input type="submit" class="btn btn-primary" value="确认修改" style="font-size:16px;width:100px;text-align:center" />
+            </div>
+            <div class="col-md-3 col-xs-6" style="text-align:left">
+                <input type="button" class="btn btn-primary" value="取  消" onclick="javascript:history.go(-1);" style="/*margin-left:200px;*/ font-size:16px;width:100px;text-align:center" />
+            </div>
+
+            <div class="col-md-3 col-xs-6"></div>
+
+        </div>
+    </div>
+
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Areas/Admin/content/js/front.js"></script>
+<script>
+
+
+    //验证商品名称不能为空
+        var goodname = document.getElementById("Goodsname");
+        goodname.onblur = function () {
+            if (goodname.value == "") {
+                goodname.value = "*商品名称不能为空";
+                goodname.style.color = "red";
+                goodname.focus();
+                return false;
+            }
+            else {
+                //验证商品名称只能是汉字
+                var reg = /^[\u0391-\uFFE5]+$/;
+                if (!reg.test(goodname.value)) {
+                    goodname.value = "*请输入汉字";
+                    goodname.style.color = "red";
+                    goodname.focus();
+                    return false;
+                }
+            }
+            goodname.style.color = "black";
+            }
+
+
+        //验证点赞数量不能为空
+        var clickcount = document.getElementById("clickcount");
+        clickcount.onblur = function () {
+            if (clickcount.value == "") {
+                clickcount.value = "*点赞数不能为空";
+                clickcount.style.color = "red";
+                clickcount.focus();
+                return false;
+            }
+            else {
+                //验证点赞数量规范
+                var ageReg =/^[0-9]+$/;
+                if (!ageReg.test(clickcount.value)) {
+                    clickcount.value = "请输入数字";
+                    clickcount.style.color = "red";
+                    clickcount.focus();
+                    return false;
+                }
+            }
+            clickcount.style.color = "black";
+        }
+
+
+        //验证关键字不能为空
+        var KeyWord = document.getElementById("KeyWord");
+        KeyWord.onblur = function () {
+            if (KeyWord.value == "") {
+                KeyWord.value = "*关键字不能为空";
+                KeyWord.style.color = "red";
+                KeyWord.focus();
+                return false;
+            }
+            else {
+                //验证关键字只能是汉字
+                var reg = /^[\u0391-\uFFE5]+$/;
+                if (!reg.test(KeyWord.value)) {
+                    KeyWord.value = "*请输入汉字";
+                    KeyWord.style.color = "red";
+                    KeyWord.focus();
+                    return false;
+                }
+            }
+            KeyWord.style.color = "black";
+        }
+
+
+    //验证商品数量只能是数字
+        var GoodsNUm = document.getElementById("GoodsNUm");
+        GoodsNUm.onblur=function(){
+            var ageReg = /^[0-9]+$/;
+            if (!ageReg.test(GoodsNUm.value)) {
+                GoodsNUm.value = "*请输入数字";
+                GoodsNUm.style.color = "red";
+                GoodsNUm.focus();
+                return false;
+            }
+            GoodsNUm.style.color = "black";
+        }
+        //验证商品宽度只能是数字
+        var GoodsWeights = document.getElementById("GoodsWeight");
+        GoodsWeights.onblur = function () {
+            var ageReg = /^[0-9]+$/;
+            if (!ageReg.test(GoodsWeights.value)) {
+                GoodsWeights.value = "*请输入数字";
+                GoodsWeights.style.color = "red";
+                GoodsWeights.focus();
+                return false;
+            }
+            GoodsWeights.style.color = "black";
+        }
+
+
+        //验证销售数量只能是数字
+        var salesNum = document.getElementById("salesNum");
+        salesNum.onblur = function () {
+            var ageReg = /^[0-9]+$/;
+            if (!ageReg.test(salesNum.value)) {
+                salesNum.value = "*请输入数字";
+                salesNum.style.color = "red";
+                salesNum.focus();
+                return false;
+            }
+            salesNum.style.color = "black";
+        }
+
+        //验证邮费价格格式
+        var Postage = document.getElementById("Postage");
+        Postage.onblur = function () {
+            var priceReg = /(^[1-9]\d*(\.\d{1,2})?$)|(^0(\.\d{1,2})?$)/;
+            if (!priceReg.test(Postage.value)) {
+                Postage.value = "*请正确输入价格";
+                Postage.style.color = "red";
+                Postage.focus();
+                return false;
+            }
+            Postage.style.color = "black";
+        }
+       
+        //验证商品市场价格格式
+        var makeprice = document.getElementById("makeprice");
+        makeprice.onblur = function () {
+            var priceReg = /(^[1-9]\d*(\.\d{1,2})?$)|(^0(\.\d{1,2})?$)/;
+            if (!priceReg.test(makeprice.value)) {
+                makeprice.value = "*请正确输入价格";
+                makeprice.style.color = "red";
+                makeprice.focus();
+                return false;
+            }
+            makeprice.style.color = "black";
+        }
+
+        //验证商品促销价格格式
+        var promoteprice = document.getElementById("promoteprice");
+        promoteprice.onblur = function () {
+            var priceReg = /(^[1-9]\d*(\.\d{1,2})?$)|(^0(\.\d{1,2})?$)/;
+            if (!priceReg.test(promoteprice.value)) {
+                promoteprice.value = "*请正确输入价格";
+                promoteprice.style.color = "red";
+                promoteprice.focus();
+                return false;
+            }
+            promoteprice.style.color = "black";
+        }
+
+
+        //日期控件
+        $('#form_datetime').datetimepicker({
+            weekStart: 0, //一周从哪一天开始
+            todayBtn: 1, //
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1
+        });
+
+        //日期控件
+        $('#form_datetime1').datetimepicker({
+            weekStart: 0, //一周从哪一天开始
+            todayBtn: 1, //
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1
+        });
+        //日期控件
+        $('#form_datetime2').datetimepicker({
+            weekStart: 0, //一周从哪一天开始
+            todayBtn: 1, //
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1
+        });
+
+</script>
+

@@ -1,0 +1,157 @@
+﻿@model PagedList.IPagedList<SHoppMVC.Models.Backgood >
+@using PagedList.Mvc;
+
+
+@{
+
+    ViewBag.Title = "退货";
+    ViewBag.count = ViewBag.cartnum;
+    ViewBag.Loginname = ViewBag.login;
+}
+<style>
+            .DropList {
+     width:158px;
+     height:30px;
+    }
+            .pagination-container > .pagination > li {
+        width: 40px;
+        height: 25px;
+        background-color: #33B35A;
+        text-decoration: none;
+        margin-left: 5px;
+        color: white;
+        text-align: center;
+    }
+</style>
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <div class="section_title">
+                        <p>好利来购物网站</p>
+                        <h2>退货</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="shopping_cart_area mt-70">
+    <div class="container">
+            <div class="row">
+
+                    <div class="table_desc">
+                        <div class="cart_page table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" id="chkall" onclick="GetAllCheckbox(this)" />
+                                        </th>
+                                        <th>图片</th>
+                                        <th>商品</th>
+                                        <th>商品数量</th>
+                                        <th>价格</th>
+                                        <th>总价</th>
+                
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                        @foreach (var item in Model)
+                                        {
+                                           
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" name="chpproducts" value="@item.ID" id="@item.ID" />
+
+                                                </td>
+                                                <td><a href="#"><img src='@item.thumbUrl ' alt="" style="width:90px;height:90px;"></a></td>
+                                                <td>@item.goodsName</td>
+                                                <td>
+                     
+                                                   @item.buyNumber
+                                                </td>
+                                                <td>
+
+                                                    @item.marketPrice
+                                                </td>
+                                                <td class="product_total">£<span name="priceName" id="price_@item.ID"> @item.totalprice</span></td>
+                        
+                                            </tr>
+
+                                        }
+                        
+                                </tbody>
+                            </table>
+                            共 @Model.PageCount 页，当前 @Model.PageNumber 页
+                            @Html.PagedListPager(Model, pagenum => Url.Action("Index", new { pagenum}))
+                        </div>
+                        @using (Html.BeginForm("Delete", "HaveBuy", FormMethod.Post))
+                        {
+                            <button class="btn btn-success" data-toggle="modal" data-target="#myModal" type="submit" onclick="chooseChk()" style="margin-left:90%;">退货</button>
+                        <!-- 模态框（Modal） -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel">退货信息</h4>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            请选择退货原因:@Html.DropDownList("backgood",null, new { @class = "DropList" })
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                            @*<button type="submit" class="btn btn-success" id="submitButton">退货</button>*@
+                                            <input type="submit" class="btn btn-success" id="submitButton" value="退货" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<script>
+
+    var jj;
+    function chooseChk() {
+        var cks = document.getElementsByName("chpproducts");
+        var result;
+        for (var i = 0; i < cks.length; i++) {
+            if (cks[i].checked) {
+                result = cks[i].value;
+                jj = result;
+            }
+        }
+    }
+
+    //模拟态框的弹出
+    $(function () {
+            $('#myModal').on('show.bs.modal', function (e) {
+
+            });
+    })
+
+    //传入到控制器中数据
+    $("#submitButton").click(function () {
+        var data = jj;//前台数据
+        var backgood = document.getElementById("backgood").value;
+
+        //  /控制器/方法   frontViewData：后台参数  backgoodss：后台参数
+        $.post("/HaveBuy/Delete", { frontViewData: data, backgoodss: backgood});
+    });
+
+    ////页面关闭之前
+    //window.onbeforeunload = function () {
+    //    $.post("/HaveBuy/change", { username: null });
+    //};
+  
+</script>

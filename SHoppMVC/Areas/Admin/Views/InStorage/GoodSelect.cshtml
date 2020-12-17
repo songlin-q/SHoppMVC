@@ -1,0 +1,127 @@
+﻿
+@model IEnumerable<SHoppMVC.Models.Goods>
+@*@model PagedList.IPagedList<SHoppMVC.Models.Goods>
+@using PagedList.Mvc;*@
+@{
+    Layout = null;
+    ViewBag.Title = "商品管理";
+
+}
+<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+
+<style>
+    .DropList {
+        width: 164px;
+        height: 27px;
+    }
+</style>
+@using (Html.BeginForm())
+{
+    <div>
+        @Html.TextBox("goodsSn", null, new { @placeholder = "请输入商品号" })
+      
+        <input type="submit" value="搜 索" id="search" class="btn btn-success" />
+        <input type="submit" value="入 库" id="search" class="btn btn-success" />
+    </div>
+
+
+<table class="table">
+    <tr>
+        <th>
+            <input type="checkbox" id="chkall" onclick="GetAllCheckbox(this)" />
+        </th>
+        <th>
+            商品编码
+        </th>
+        <th>
+            商品名称
+        </th>
+        <th>
+            类型
+        </th>
+        <th>
+            原数量
+        </th>
+       
+        <th>
+            单价
+        </th>
+        <th>
+            入库数
+        </th>
+       
+    </tr>
+    @{ 
+        int cindex = 0;
+    }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{
+                    cindex += 1;
+                    var indexandId = cindex.ToString() + 'p' + item.goodsSn;
+                   
+                }
+                <input type="checkbox" name="cproducts" value="@indexandId" id="@item.ID" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.goodsSn)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.goodsName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.goodsType.typeNarme )
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.goodsNumber)
+            </td>
+           
+            <td>
+                @Html.TextBox("InSoragePrice", "", new { @type = "number", @min = "1", @max = "500", Value = 1 })
+            </td>
+            <td>
+                @Html.TextBox("InSorageNum", "", new { @type = "number", @min = "20", @max = "500", Value = 20 })
+            </td>
+      
+          
+        </tr>
+    }
+
+</table>
+}
+ @*共 @Model.PageCount 页，当前 @Model.PageNumber 页
+@Html.PagedListPager(Model, pagenum => Url.Action("GoodSelect", new { pagenum }))*@
+
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Areas/Admin/content/js/front.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/layer-v3.1.1/layer/layer.js"></script>
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Areas/Admin/content/js/front.js"></script>
+<script>
+    //////////////////////全选操作//////////////////////
+    function GetAllCheckbox(parentName) {
+        var ch = document.getElementsByTagName("input");
+        for (var i = 0; i < ch.length; i++) {
+            if (parentName.checked) {
+                if (ch[i].type == "checkbox") {
+                    ch[i].checked = true;
+                    //价格循环遍历累加
+
+                }
+            }
+            else {
+                if (ch[i].type == "checkbox") {
+                    ch[i].checked = false;
+                }
+            }
+        }
+    }
+</script>

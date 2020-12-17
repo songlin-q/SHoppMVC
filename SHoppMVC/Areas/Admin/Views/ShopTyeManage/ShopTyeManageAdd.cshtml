@@ -1,0 +1,97 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "ShopManageupdate";
+    ViewBag.nav = "商品类型的管理>商品类型管理的新增";
+}
+<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+<style>
+    .DropList {
+        width: 358px;
+        height: 40px;
+    }
+
+    .y {
+        border: 0px;
+        border-bottom: 1px solid #33b257;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        /*background-color: #F9f9f9;*/
+    }
+
+    .mainh {
+        height: 90%;
+        border: 2px solid lightgray;
+        margin-top: 30px;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        /*background-color: #F9f9f9;*/
+        /*padding:0px;*/
+    }
+
+    .bodyh {
+        margin-top: 50px;
+        /*margin-bottom:50px;*/
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    <div class="container mainh">
+        <div class="row" style="height:50px; background-color:#F9f9f9"></div>
+        <div class="row  bodyh">
+            <div class="col-md-3 col-xs-6"></div>
+            <div class="col-md-3 col-xs-6">
+                商品类型名称 ：@Html.TextBox("goodtypename", null, new { @placeholder = "请输入类型名称",@class= "form-control y" });
+            </div>
+            <div class="col-md-3 col-xs-6">
+                是否可用 ：@Html.DropDownList("enlable", null, new { @class = "form-control y" });
+            </div>
+            <div class="col-md-3 col-xs-6"></div>
+
+       
+
+
+            <div class="col-md-3 col-xs-6"></div>
+            <div class="col-md-3 col-xs-6" style="text-align:center">
+                <input type="submit" class="btn btn-primary" value="确认修改" style="font-size:16px;width:100px;text-align:center" />
+
+            </div>
+            <div class="col-md-3 col-xs-6" style="text-align:left">
+                <input type="button" class="btn btn-primary" value="取  消" onclick="javascript:history.go(-1);" style=" font-size:16px;width:100px;text-align:center" />
+            </div>
+
+            <div class="col-md-3 col-xs-6"></div>
+        </div>
+
+    </div>
+}
+
+<script>
+    //验证商品名称不能为空
+    var goodtypename = document.getElementById("goodtypename");
+    goodtypename.onblur = function () {
+        if (goodtypename.value == "") {
+            goodtypename.value = "*商品名称不能为空";
+            goodtypename.style.color = "red";
+            goodtypename.focus();
+                return false;
+            }
+            else {
+                //验证商品名称只能是汉字
+                var reg = /^[\u0391-\uFFE5]+$/;
+                if (!reg.test(goodtypename.value)) {
+                    goodtypename.value = "*请输入汉字";
+                    goodtypename.style.color = "red";
+                    goodtypename.focus();
+                    return false;
+                }
+        }
+        goodtypename.style.color = "black";
+    }
+    </script>
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Areas/Admin/content/js/front.js"></script>

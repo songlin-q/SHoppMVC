@@ -1,0 +1,5 @@
+﻿    /*去掉bootstrap自带的input输入框半透明阴影*/
+		.form-control:focus {
+		   border-color:#ccc;
+           box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+		}

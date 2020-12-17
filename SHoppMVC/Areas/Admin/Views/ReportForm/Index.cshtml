@@ -1,0 +1,150 @@
+﻿@model PagedList.IPagedList<SHoppMVC.Models.article>
+@using PagedList.Mvc;
+
+@{
+    Layout = null;
+    ViewBag.Title = "文章管理";
+    ViewBag.nav = "文章管理";
+
+}
+<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/fontastic.css">
+<link rel="stylesheet" href="~/Areas/Admin/content/css/style.default.css" id="theme-stylesheet">
+
+@*页面样式 *@
+<link rel="stylesheet" href="https://www.jq22.com/jquery/font-awesome.4.7.0.css">
+<link href="~/Areas/Admin/content/css/button/component.css" rel="stylesheet" />
+<link href="~/Areas/Admin/content/css/button/hoverStyle.css" rel="stylesheet" />
+<div>
+    <style>
+        .btnBlue {
+            background-color: aquamarine;
+            width: 80px;
+            border-radius: 20px;
+        }
+        .imgs {
+        width:40px;
+        height:40px;
+        }
+           table {
+            margin: 0 auto;
+            width: 60%;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-family: "微软雅黑";
+            table-layout: fixed;
+            text-align: center;
+        }
+
+    </style>
+</div>
+
+
+@using (Html.BeginForm())
+{
+    @Html.Label("文章主题或发表人:")
+    @Html.TextBox("Name", null, new { @class = "text-danger" })
+    <div class="progress-button">
+        <button type="submit" id="search">搜 索</button>
+    </div>
+            <div class="progress-button">
+                <button type="submit" id="search">@Html.ActionLink("导出", "excelout")</button>
+            </div>
+}
+<table class="table" style="width:100%;">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            文章编号
+        </th>
+        <th>
+            发表人
+        </th>
+        <th>
+            文章主题
+        </th>
+        <th>
+            文章内容
+        </th>
+        <th>
+            图片
+        </th>
+        <th>
+            发表时间
+        </th>
+        <th>
+            状态
+        </th>
+        <th>
+            操作
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.articleId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.articleCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+      
+                @if (item.subject == null)
+                {
+                    <p> 无</p>
+                }
+                else
+                {
+                    <p>@item.subject</p>
+                }
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.content)
+            </td>
+            <td>
+                @if (item.picture == null)
+                {
+                    <img width="200" height="200" src="" alt=""  class="imgs"/>
+                }
+                else
+                {
+                    <img width="200" height="200" src="@Url.Content(item.picture)" alt="" class="imgs" />
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.publishDate)
+            </td>
+
+            <td>
+                @if (item.isDelete == 0)
+                {
+                    @Html.Label("显示")
+                }
+                else
+                {
+                    {
+                        @Html.Label("隐藏")
+                    }
+                }
+            </td>
+            <td>
+                @Html.ActionLink("  ", "Add", null, new { @class = "fa fa-plus", @style = "font-size:18px;" })
+                <a href="Pudate?id=@item.articleCode"  class = "fa fa-pencil-square-o" style = "font-size:18px;" ></a>
+                @Html.ActionLink("  ", "Delete",null, new { id = item.articleId }, new { onclick = "return confirm('确定要删除吗？')", @class = "fa fa-times", @style = "font-size:18px;" })
+            </td>
+        </tr>
+    }
+
+</table>
+ 共 @Model.PageCount 页，当前 @Model.PageNumber 页 @Html.PagedListPager(Model, pagenum => Url.Action("Index", new { pagenum, @class = "button" }))
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+<script src="~/Areas/Admin/content/js/front.js"></script>
